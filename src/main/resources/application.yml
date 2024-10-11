@@ -7,11 +7,7 @@ spring:
       ddl-auto: update
     show-sql: true
 
-  datasource:
-    url: jdbc:mysql://flood-db.c9c2a686ayrx.us-east-1.rds.amazonaws.com:3306/flood_db
-    username: juan_root
-    password: 1152466831
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
   thymeleaf:
     #prefix: classpath:/static/
