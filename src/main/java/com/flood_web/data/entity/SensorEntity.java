@@ -11,22 +11,33 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(setterPrefix = "with")
 @Entity
 @Table(name = "sensor")
-public class Sensor {
+public class SensorEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column
-    private String Location;
+    private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @Column
+    private String location;
+
+    /*@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "sensor_zone", joinColumns = @JoinColumn(name = "sensor_id"),
             inverseJoinColumns = @JoinColumn(name = "zone_id"))
-    private List<Zone> zones;
+    private List<Zone> zones;*/
 }
