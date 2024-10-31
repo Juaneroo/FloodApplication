@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	<title>Crear Cuenta | StudiOX | Software de administración estudios Webcam</title>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" th:href="@{/style/assets/images/logo/favicon.png}">
+
+	<!-- plugins css -->
+	<link rel="stylesheet" th:href="@{/style/bower_components/bootstrap/dist/css/bootstrap.css}" />
+	<link rel="stylesheet" th:href="@{/style/bower_components/PACE/themes/blue/pace-theme-minimal.css}" />
+	<link rel="stylesheet" th:href="@{/style/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css}" />
+
+	<!-- core css -->
+	<link th:href="@{/style/assets/css/ei-icon.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/style/assets/css/themify-icons.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/style/assets/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/style/assets/css/animate.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/style/assets/css/app.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="app">
+		<div class="authentication">
+			<div class="sign-up">
+				<div class="row no-mrg-horizon">
+					<div class="col-md-4 no-pdd-horizon d-none d-md-block">
+						<div class="full-height bg"
+							th:style="'background-image: url(' + @{/style/assets/images/others/img-31.jpg} + ')'">
+							<div class="vertical-align full-height pdd-horizon-70">
+								<div class="table-cell">
+									<div class="row">
+										<div class="mr-auto ml-auto col-md-10">
+											<div class="text-right">
+												<img class="img-responsive mrg-left-auto mrg-btm-15"
+													src="assets/images/logo/logo-white.png" alt="" width="170">
+												<p class="text-white lead text-opacity lh-1-7"><strong
+														th:text="#{motivate_singup_msg}"></strong></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8 bg-white no-pdd-horizon">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="full-height height-100">
+									<div class="vertical-align full-height pdd-horizon-70">
+										<div class="table-cell">
+											<div class="pdd-horizon-15">
+												<h1 class="mrg-btm-30" th:text="#{create_account_model}"></h1>
+												<form id="createStreamer">
+													<div class="form-group">
+														<label class="text-normal text-dark">ID:
+															Idetificación/Cedula/Pasaporte</label>
+														<input name="identification" type="text" class="form-control"
+															required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Foto frontal del ID</label>
+														<input name="idFrontalPhoto" type="file" class="form-control"
+															accept="image/jpg, image/jpeg, image/png" required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Foto trasera del ID</label>
+														<input name="idRearPhoto" type="file" class="form-control"
+															accept="image/jpg, image/jpeg, image/png" required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Foto sosteniendo el
+															ID</label>
+														<input name="photoHoldingId" type="file" class="form-control"
+															accept="image/jpg, image/jpeg, image/png" required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Telefono celular</label>
+														<input name="phone" type="tel" class="form-control" required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Dirección de correo
+															electronico</label>
+														<input name="email" type="email" class="form-control" required>
+													</div>
+													<div class="form-group">
+														<label class="text-normal text-dark">Contraseña</label>
+														<input name="password" minlength="8" type="password"
+															class="form-control" required>
+													</div>
+													<div class="checkbox ">
+														<input id="conditionsAccepted" name="conditionsAccepted"
+															type="checkbox">
+														<label class="text-normal text-dark"
+															for="conditionsAccepted">¿Acepta terminos y
+															condicones?</label>
+													</div>
+
+													<div class="form-group">
+														<button type="submit"
+															class="btn btn-primary btn-block border-radius-6">Crear tu
+															cuenta</button>
+													</div>
+												</form>
+												<p th:text="#{already_account}"> <a href="">Sign In</a></p>
+												<hr>
+												<small>By signing up you agree to out <a href="">Terms &
+														Policy</a></small>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p id="oop-msg" th:text="#{oops}" hidden></p>
+
+	<!-- commons-js START -->
+	<div th:replace="@{/views/common/html/commons-js} :: commons-js"></div>
+	<!-- commons-js END -->
+
+
+	<!-- build:js assets/js/app.min.js -->
+	<!-- core js -->
+	<script type="text/javascript" th:src="@{/views/model/outsite/sign-up.js}"></script>
+	<!-- endbuild -->
+
+	<!-- page js -->
+
+</body>
+
+</html>

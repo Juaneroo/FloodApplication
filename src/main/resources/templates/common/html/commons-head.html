@@ -1,0 +1,37 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <!--
+        It's reusable HTML fragment to include all elements of the HTML HEAD
+        -->
+    <div th:fragment="commons-head">
+        <!-- Favicon -->
+        <link rel="shortcut icon" th:href="@{/style/assets/images/logo/favicon.png}" />
+
+        <!-- plugins css -->
+        <link rel="stylesheet" th:href="@{/style/bower_components/bootstrap/dist/css/bootstrap.css}" />
+        <link rel="stylesheet" th:href="@{/style/bower_components/PACE/themes/blue/pace-theme-minimal.css}" />
+        <link rel="stylesheet" th:href="@{/style/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css}" />
+
+        <!-- page plugins css -->
+        <link rel="stylesheet" th:href="@{/style/bower_components/datatables/media/css/jquery.dataTables.css}" />
+        <link th:href="@{/style/assets/css/sweetalert.css}" rel="stylesheet" />
+        <link th:href="@{/style/bower_components/selectize/dist/css/selectize.default.css}" rel="stylesheet" />
+ 
+        <!-- core css -->
+        <link th:href="@{/style/assets/css/ei-icon.css}" rel="stylesheet" />
+        <link th:href="@{/style/assets/css/themify-icons.css}" rel="stylesheet" />
+        <link th:href="@{/style/assets/css/font-awesome.min.css}" rel="stylesheet" />
+        <link th:href="@{/style/assets/css/animate.min.css}" rel="stylesheet" />
+        <link th:href="@{/style/assets/css/app.css}" rel="stylesheet" />
+
+        <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+        />
+    </div>
+</body>
+
+</html>
