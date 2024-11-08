@@ -43,8 +43,8 @@ public class SensorController {
         }
 
         return new ModelAndView(VIEW_PATH  + "/update-2")
-                .addObject("showSensorSaved", showSensorSavedOk)
-                .addObject("showSensorError", showSensorSavedError)
+                .addObject("showSensorSavedOk", showSensorSavedOk)
+                .addObject("showSensorSavedError", showSensorSavedError)
                 .addObject("sensor", Sensor.builder().build())
                 .addObject("sensors", sensorCrudService.listAll());
     }
