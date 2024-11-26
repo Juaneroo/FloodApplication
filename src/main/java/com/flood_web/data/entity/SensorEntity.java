@@ -34,7 +34,7 @@ public class SensorEntity {
     private String name;
 
     @Column
-    private String location;
+    private boolean active;
 
     /*@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "sensor_zone", joinColumns = @JoinColumn(name = "sensor_id"),

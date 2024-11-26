@@ -5,11 +5,9 @@ import com.flood_web.service.SensorCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/inside")
@@ -22,16 +20,23 @@ public class SensorController {
     private static final String VIEW_PATH = "/model/inside";
 
     @GetMapping("/sensor")
-    private ModelAndView getAllSensor() {
-        return new ModelAndView(VIEW_PATH  + "/update-2")
-                .addObject("showSensorSavedOk", false)
-                .addObject("showSensorSavedError", false)
+    private ModelAndView getSensor() {
+
+        return new ModelAndView(VIEW_PATH  + "/sensor")
                 .addObject("sensor", Sensor.builder().build())
                 .addObject("sensors", sensorCrudService.listAll());
     }
 
+    @GetMapping("/sensor/{id}")
+    private ModelAndView getSensorById(@PathVariable String id) {
+
+        return new ModelAndView(VIEW_PATH  + "/sensor")
+                .addObject("sensor", sensorCrudService.findById(id).get())
+                .addObject("sensors", sensorCrudService.listAll());
+    }
+
     @PostMapping("/sensor")
-    private ModelAndView saveSensor(@ModelAttribute("sensor") Sensor sensor) {
+    public String saveSensor(@ModelAttribute("sensor") Sensor sensor, RedirectAttributes redirectAttributes) {
 
         boolean showSensorSavedOk = true;
         boolean showSensorSavedError = false;
@@ -42,11 +47,12 @@ public class SensorController {
             showSensorSavedError = true;
         }
 
-        return new ModelAndView(VIEW_PATH  + "/update-2")
-                .addObject("showSensorSavedOk", showSensorSavedOk)
-                .addObject("showSensorSavedError", showSensorSavedError)
-                .addObject("sensor", Sensor.builder().build())
-                .addObject("sensors", sensorCrudService.listAll());
+        //return new ModelAndView(VIEW_PATH  + "/update-2")
+                redirectAttributes.addFlashAttribute("showSensorSavedOk", showSensorSavedOk)
+                        .addFlashAttribute("showSensorSavedError", showSensorSavedError);
+
+        return "redirect:/inside/sensor";
+
     }
 
 }

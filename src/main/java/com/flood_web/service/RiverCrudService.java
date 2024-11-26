@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,13 +22,21 @@ public class RiverCrudService implements CrudService<River>{
 
 
     @Override
-    public void save(River obj) {
+    public void save(River river) {
 
-        RiverEntity river = RiverEntity.builder()
-                .withId(UUID.randomUUID().toString().substring(0, 8))
-                .withName(obj.name())
+        String idRiver = null;
+        if (river.id() != null && !river.id().trim().isEmpty()){
+            idRiver = river.id();
+        }else{
+            idRiver = UUID.randomUUID().toString().substring(0, 8);
+        }
+
+        RiverEntity riverEntity = RiverEntity.builder()
+                .withId(idRiver)
+                .withName(river.name())
+                .withActive(river.active())
                 .build();
-        riverRepository.save(river);
+        riverRepository.save(riverEntity);
 
     }
 
@@ -39,10 +48,29 @@ public class RiverCrudService implements CrudService<River>{
                 .map(entity -> River.builder()
                         .withId(entity.getId())
                         .withName(entity.getName())
+                        .withActive(entity.isActive())
                         .build()
                 )
                 .collect(Collectors.toList());
 
 
+    }
+
+    @Override
+    public Optional<River> findById(String id) {
+
+        Optional<RiverEntity> foundRiver = this.riverRepository.findById(id);
+        if (foundRiver.isEmpty()){
+            return Optional.of(River.builder().build());
+        }
+
+        RiverEntity riverEntity = foundRiver.get();
+        River river = River.builder()
+                .withId(riverEntity.getId())
+                .withName(riverEntity.getName())
+                .withActive(riverEntity.isActive())
+                .build();
+
+        return Optional.of(river);
     }
 }

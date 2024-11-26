@@ -1,12 +1,15 @@
 package com.flood_web.service;
 
+import com.flood_web.controller.River;
 import com.flood_web.controller.Sensor;
+import com.flood_web.data.entity.RiverEntity;
 import com.flood_web.data.entity.SensorEntity;
 import com.flood_web.data.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -15,18 +18,23 @@ import java.util.stream.StreamSupport;
 public class SensorCrudService implements CrudService<Sensor>{
 
     @Autowired
-    private SensorRepository sensorRepository;
+    SensorRepository sensorRepository;
 
     @Override
     public void save(Sensor sensor) {
 
-        SensorEntity sensorEntity = SensorEntity
-                .builder()
-                .withId(UUID.randomUUID().toString().substring(0, 8))
-                .withLocation(sensor.location())
-                .withName(sensor.name())
-                .build();
+        String idSensor = null;
+        if (sensor.id() != null && !sensor.id().trim().isEmpty()){
+            idSensor = sensor.id();
+        }else{
+            idSensor = UUID.randomUUID().toString().substring(0, 8);
+        }
 
+        SensorEntity sensorEntity = SensorEntity.builder()
+                .withId(idSensor)
+                .withName(sensor.name())
+                .withActive(sensor.active())
+                .build();
         sensorRepository.save(sensorEntity);
     }
 
@@ -39,9 +47,26 @@ public class SensorCrudService implements CrudService<Sensor>{
                 .map(entity -> Sensor.builder()
                         .withId(entity.getId())
                         .withName(entity.getName())
-                        .withLocation(entity.getLocation())
+                        .withActive(entity.isActive())
                         .build()
                 )
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Sensor> findById(String id) {
+        Optional<SensorEntity> foundSensor = this.sensorRepository.findById(id);
+        if (foundSensor.isEmpty()){
+            return Optional.of(Sensor.builder().build());
+        }
+
+        SensorEntity sensorEntity = foundSensor.get();
+        Sensor sensor = Sensor.builder()
+                .withId(sensorEntity.getId())
+                .withName(sensorEntity.getName())
+                .withActive(sensorEntity.isActive())
+                .build();
+
+        return Optional.of(sensor);
     }
 }

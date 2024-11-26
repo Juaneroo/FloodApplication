@@ -4,5 +4,6 @@ import lombok.Builder;
 
 @Builder(setterPrefix = "with")
 public record River(String id,
-                    String name) {
+                    String name,
+                    Boolean active) {
 }

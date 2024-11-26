@@ -8,5 +8,5 @@ import java.util.UUID;
 @Builder(setterPrefix = "with")
 public record Sensor(String id,
                      String name,
-                     String location) {
+                     Boolean active) {
 }

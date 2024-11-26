@@ -22,4 +22,6 @@ public class RiverEntity {
     @Column
     private String name;
 
+    @Column
+    private boolean active;
 }

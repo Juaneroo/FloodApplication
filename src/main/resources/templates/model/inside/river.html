@@ -251,11 +251,11 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Registro Sensor</h1>
+    <h1>Registro Rios</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active">Sensor</li>
+        <li class="breadcrumb-item active">Rio</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -266,15 +266,23 @@
         <div class="card">
 
           <div class="card-body">
-            <h5 class="card-title">Sensor </h5>
+            <h5 class="card-title">Rio </h5>
 
             <form  action="#" th:action="@{/inside/river}" method="post" th:object="${river}" class="row g-3">
               <div class="col-md-12">
+                <input th:field="*{id}" type="hidden">
                 <div class="form-floating">
                   <input th:field="*{name}" type="text" class="form-control" id="floatingName" maxlength="159" required
                          placeholder="Nombre del sensor">
                   <label for="floatingName">Nombre</label>
                 </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" th:field="*{active}" th:checked="*{active}" id="active">
+                  <label class="form-check-label" for="active">
+                    Activo
+                  </label>
+                </div>
+
               </div>
 
               <div class="text-center">
@@ -288,14 +296,14 @@
           </div>
         </div>
 
-        <div th:if="${showSensorSavedOk}" class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+        <div th:if="${showRiverSavedOk}" class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
           <i class="bi bi-check-circle me-1"></i>
-          ¡El sensor ha sido registrado con exito!
+          ¡El rio ha sido registrado o modificado con éxito!
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div th:if="${showSensorSavedError}" class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <div th:if="${showRiverSavedError}" class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
           <i class="bi bi-exclamation-octagon me-1"></i>
-          ¡No se ha podido registrar el sensor!
+          ¡No se ha podido registrar o modificar el rio!
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
@@ -304,8 +312,8 @@
       <div class="col-lg-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Sensores</h5>
-            <p>Lista de todos los sensores</p>
+            <h5 class="card-title">Rios</h5>
+            <p>Lista de todos los rios</p>
             <!-- Table with stripped rows -->
 
             <table class="table datatable">
@@ -313,7 +321,8 @@
               <tr>
                 <th> ID </th>
                 <th> Rio </th>
-
+                <th> Activo </th>
+                <th> Editar </th>
               </tr>
               </thead>
               <tbody>
@@ -323,6 +332,12 @@
               <tr th:each="river : ${rivers}">
                 <td><span th:text="${river.id}"> ID </span></td>
                 <td><span th:text="${river.name}"> Rio </span></td>
+                <td><span th:text="${river.active ? 'Sí' : 'No'}"
+                          th:class="${river.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span></td>
+                <td>
+                  <!-- Create a clickable link with the river ID -->
+                  <a th:href="@{/inside/river/{id}(id=${river.id})}">Editar</a>
+                </td>
               </tr>
               </tbody>
             </table>
