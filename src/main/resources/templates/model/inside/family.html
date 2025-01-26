@@ -3,8 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -217,13 +215,13 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a th:href="@{/inside/sensor}">
+                    <a href="registro-sensor.html">
                         <i class="bi bi-circle"></i><span>Sensores</span>
                     </a>
                 </li>
 
                 <li>
-                    <a th:href="@{/inside/river}">
+                    <a href="components-accordion.html">
                         <i class="bi bi-circle"></i><span>Rios</span>
                     </a>
                 </li>
@@ -246,18 +244,16 @@
                 </li><!-- End Contact Page Nav -->
 
             </ul>
-        </li>
-
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Registro Sensor</h1>
+        <h1>Registrar Familias</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Sensor</li>
+                <li class="breadcrumb-item active">Familias</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -268,48 +264,51 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <h5 class="card-title">Sensor </h5>
+                        <h5 class="card-title">Familias </h5>
 
-                        <!-- Floating Labels Form -->
-                        <form action="#" th:action="@{/inside/sensor}" method="post" th:object="${sensor}"
+                        <form action="#" th:action="@{/inside/family}" method="post" th:object="${family}"
                               class="row g-3">
                             <div class="col-md-12">
                                 <input th:field="*{id}" type="hidden">
                                 <div class="form-floating">
-                                    <input th:field="*{name}" type="text" class="form-control" id="floatingName"
-                                           maxlength="159" required
-                                           placeholder="Nombre del sensor">
-                                    <label for="floatingName">Nombre</label>
+                                    <input th:field="*{name}" type="text" class="form-control"
+                                           id="floatingName" maxlength="159" required
+                                           placeholder="Nombre de la familia">
+                                    <label for="floatingName">Apellidos Familiares</label>
                                 </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:field="*{active}"
+                                           th:checked="*{active}" id="active">
+                                    <label class="form-check-label" for="active">
+                                        Activo
+                                    </label>
+                                </div>
+
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" th:field="*{active}"
-                                       th:checked="*{active}" id="active">
-                                <label class="form-check-label" for="active">
-                                    Activo
-                                </label>
-                            </div>
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Registrar o modificar</button>
                                 <button type="reset" class="btn btn-secondary">Limpiar</button>
                             </div>
-                        </form><!-- End floating Labels Form -->
+                        </form>
 
 
                     </div>
                 </div>
 
-                <div th:if="${showSensorSavedOk}" class="col-md-12 alert alert-success alert-dismissible fade show"
-                     role="alert">
+                <div th:if="${showFamilySavedOk}"
+                     class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
                     <i class="bi bi-check-circle me-1"></i>
-                    ¡El sensor ha sido registrado o modificado con éxito!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    ¡La familia ha sido registrada o modificada con éxito!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                 </div>
-                <div th:if="${showSensorSavedError}" class="col-md-12 alert alert-danger alert-dismissible fade show"
-                     role="alert">
+                <div th:if="${showFamilySavedError}"
+                     class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-octagon me-1"></i>
-                    ¡No se ha podido registrar o modificar el sensor!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    ¡No se ha podido registrar o modificar la familia!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                 </div>
 
             </div>
@@ -317,36 +316,37 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Sensores</h5>
-                        <p>Lista de todos los sensores</p>
-
+                        <h5 class="card-title">Familias</h5>
+                        <p>Lista de todas las familias</p>
                         <!-- Table with stripped rows -->
+
                         <table class="table datatable">
                             <thead>
                             <tr>
                                 <th> ID</th>
-                                <th> Sensor</th>
+                                <th> Apellido Familiar</th>
                                 <th> Activo</th>
                                 <th> Editar</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${ #lists.isEmpty(sensors)}">
-                                <td colspan="2"> No hay sensores</td>
+                            <tr th:if="${ #lists.isEmpty(family)}">
+                                <td colspan="2"> No hay familias</td>
                             </tr>
-                            <tr th:each="sensor : ${sensors}">
-                                <td><span th:text="${sensor.id}"> ID </span></td>
-                                <td><span th:text="${sensor.name}"> Sensor </span></td>
-                                <td><span th:text="${sensor.active ? 'Sí' : 'No'}"
-                                          th:class="${sensor.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
+                            <tr th:each="family : ${families}">
+                                <td><span th:text="${family.id}"> ID </span></td>
+                                <td><span th:text="${family.name}"> Familia </span></td>
+                                <td><span th:text="${family.active ? 'Sí' : 'No'}"
+                                          th:class="${family.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                                 </td>
                                 <td>
                                     <!-- Create a clickable link with the river ID -->
-                                    <a th:href="@{/inside/sensor/{id}(id=${sensor.id})}">Editar</a>
+                                    <a th:href="@{/inside/family/{id}(id=${family.id})}">Editar</a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        <!-- Table with stripped rows -->
                         <!-- End Table with stripped rows -->
 
                     </div>

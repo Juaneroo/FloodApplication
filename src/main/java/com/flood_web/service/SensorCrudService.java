@@ -1,8 +1,6 @@
 package com.flood_web.service;
 
-import com.flood_web.controller.River;
 import com.flood_web.controller.Sensor;
-import com.flood_web.data.entity.RiverEntity;
 import com.flood_web.data.entity.SensorEntity;
 import com.flood_web.data.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;

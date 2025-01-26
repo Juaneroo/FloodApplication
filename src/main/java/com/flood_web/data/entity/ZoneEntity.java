@@ -11,26 +11,35 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 import java.util.List;
 import java.util.UUID;
 
-@Table(name = "zone")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(setterPrefix = "with")
 @Entity
-public class Zone {
+@Table(name = "zone")
+
+public class ZoneEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column
     private String name;
 
     @Column
-    private String location;
+    private boolean active;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    /*@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "family_zone", joinColumns = @JoinColumn(name = "zone_id"),
             inverseJoinColumns = @JoinColumn(name = "family_id"))
-    private List<Family> families;
+    private List<FamilyEntity> families;"*/
 }
