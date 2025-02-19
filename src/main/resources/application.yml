@@ -1,31 +1,37 @@
 spring:
   application:
     name: flood-web
+
   datasource:
     url: jdbc:mysql://flood-db.c9c2a686ayrx.us-east-1.rds.amazonaws.com:3306/flood_db
     username: juan_root
     password: 1152466831
     driver-class-name: com.mysql.cj.jdbc.Driver
-    jpa:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: update
-      show-sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
   data:
     jpa:
       repositories:
         enabled: true
-    properties:
-      hibernate:
-        show_sql: true
 
   thymeleaf:
-    #prefix: classpath:/static/
     suffix: .html
-    mode: LEGACYHTML5
+    mode: HTML
     cache: false
+
   resources:
     static-locations: classpath:/static/
 
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-  logging.level.org.hibernate.SQL: DEBUG
-  logging.level.org.hibernate.type: TRACE
