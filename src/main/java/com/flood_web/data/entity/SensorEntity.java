@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,4 +41,8 @@ public class SensorEntity {
     @JoinTable(name = "sensor_zone", joinColumns = @JoinColumn(name = "sensor_id"),
             inverseJoinColumns = @JoinColumn(name = "zone_id"))
     private List<Zone> zones;*/
+
+    @OneToOne
+    @JoinColumn(name = "river_id")
+    private RiverEntity riverEntity;
 }

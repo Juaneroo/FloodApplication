@@ -1,6 +1,8 @@
 package com.flood_web.service;
 
+import com.flood_web.controller.River;
 import com.flood_web.controller.Sensor;
+import com.flood_web.data.entity.RiverEntity;
 import com.flood_web.data.entity.SensorEntity;
 import com.flood_web.data.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,17 @@ public class SensorCrudService implements CrudService<Sensor>{
     public void save(Sensor sensor) {
 
         String idSensor = null;
-        if (sensor.id() != null && !sensor.id().trim().isEmpty()){
-            idSensor = sensor.id();
+        if (sensor.getId() != null && !sensor.getId().trim().isEmpty()){
+            idSensor = sensor.getId();
         }else{
             idSensor = UUID.randomUUID().toString().substring(0, 8);
         }
 
         SensorEntity sensorEntity = SensorEntity.builder()
                 .withId(idSensor)
-                .withName(sensor.name())
-                .withActive(sensor.active())
+                .withName(sensor.getName())
+                .withActive(sensor.getActive())
+                .withRiverEntity(RiverEntity.builder().withId(sensor.getRiver().getId()).build())
                 .build();
         sensorRepository.save(sensorEntity);
     }
@@ -46,6 +49,7 @@ public class SensorCrudService implements CrudService<Sensor>{
                         .withId(entity.getId())
                         .withName(entity.getName())
                         .withActive(entity.isActive())
+                        .withRiver(River.builder().withId("ss").withName("fake").build())
                         .build()
                 )
                 .collect(Collectors.toList());

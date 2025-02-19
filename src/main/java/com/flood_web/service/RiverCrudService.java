@@ -23,16 +23,16 @@ public class RiverCrudService implements CrudService<River>{
     public void save(River river) {
 
         String idRiver = null;
-        if (river.id() != null && !river.id().trim().isEmpty()){
-            idRiver = river.id();
+        if (river.getId() != null && !river.getId().trim().isEmpty()){
+            idRiver = river.getId();
         }else{
             idRiver = UUID.randomUUID().toString().substring(0, 8);
         }
 
         RiverEntity riverEntity = RiverEntity.builder()
                 .withId(idRiver)
-                .withName(river.name())
-                .withActive(river.active())
+                .withName(river.getName())
+                .withActive(river.isActive())
                 .build();
         riverRepository.save(riverEntity);
 

@@ -282,6 +282,18 @@
                                     <label for="floatingName">Nombre</label>
                                 </div>
                             </div>
+                            <!-- Aqui dropbox para asociar rios a sensor-->
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <select th:field="*{river.id}" class="form-select" aria-label="Default select example" id="txtSensor">
+                                        <option value="*" selected>Open this select menu</option>
+                                        <option th:each="riverr : ${rivers}"
+                                                th:value="${riverr.id}"
+                                                th:text="${riverr.name}"></option>
+                                    </select>
+                                    <label for="txtSensor">Asocie un rio</label>
+                                </div>
+                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" th:field="*{active}"
                                        th:checked="*{active}" id="active">
