@@ -3,6 +3,7 @@ package com.flood_web.service;
 import com.flood_web.controller.Zone;
 import com.flood_web.data.entity.ZoneEntity;
 import com.flood_web.data.repository.ZoneRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +19,24 @@ public class ZoneCrudService implements CrudService<Zone>{
     @Autowired
     ZoneRepository zoneRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
 
     @Override
     public void save(Zone zone) {
 
-        String idZone = null;
-        if (zone.id() != null && !zone.id().trim().isEmpty()){
-            idZone = zone.id();
-        }else{
-            idZone = UUID.randomUUID().toString().substring(0, 8);
-        }
-
-        ZoneEntity zoneEntity = ZoneEntity.builder()
-                .withId(idZone)
-                .withName(zone.name())
-                .withActive(zone.active())
-                .build();
+        ZoneEntity zoneEntity = modelMapper.map(zone, ZoneEntity.class);
         zoneRepository.save(zoneEntity);
-
     }
 
     @Override
     public List<Zone> listAll() {
         Iterable<ZoneEntity> entities = zoneRepository.findAll();
-
         return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> Zone.builder()
-                        .withId(entity.getId())
-                        .withName(entity.getName())
-                        .withActive(entity.isActive())
-                        .build()
+                .map(entity -> modelMapper.map(entity, Zone.class)
                 )
                 .collect(Collectors.toList());
-
-
     }
 
     @Override
@@ -63,11 +48,7 @@ public class ZoneCrudService implements CrudService<Zone>{
         }
 
         ZoneEntity zoneEntity = foundZone.get();
-        Zone zone = Zone.builder()
-                .withId(zoneEntity.getId())
-                .withName(zoneEntity.getName())
-                .withActive(zoneEntity.isActive())
-                .build();
+        Zone zone = modelMapper.map(zoneEntity, Zone.class);
 
         return Optional.of(zone);
     }

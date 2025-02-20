@@ -264,7 +264,7 @@
 
     <section class="section">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="card">
 
                     <div class="card-body">
@@ -326,7 +326,7 @@
 
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Sensores</h5>
@@ -338,7 +338,8 @@
                             <tr>
                                 <th> ID</th>
                                 <th> Sensor</th>
-                                <th> Activo</th>
+                                <th> Rio asocaiado</th>
+                                <th> ¿Activo?</th>
                                 <th> Editar</th>
                             </tr>
                             </thead>
@@ -349,6 +350,7 @@
                             <tr th:each="sensor : ${sensors}">
                                 <td><span th:text="${sensor.id}"> ID </span></td>
                                 <td><span th:text="${sensor.name}"> Sensor </span></td>
+                                <td><span th:text="${sensor.river.name}"> Sensor </span></td>
                                 <td><span th:text="${sensor.active ? 'Sí' : 'No'}"
                                           th:class="${sensor.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                                 </td>

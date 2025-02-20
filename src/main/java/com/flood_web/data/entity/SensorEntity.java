@@ -10,17 +10,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
@@ -29,7 +32,8 @@ import java.util.UUID;
 public class SensorEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String name;
@@ -42,7 +46,7 @@ public class SensorEntity {
             inverseJoinColumns = @JoinColumn(name = "zone_id"))
     private List<Zone> zones;*/
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "river_id")
-    private RiverEntity riverEntity;
+    private RiverEntity river;
 }

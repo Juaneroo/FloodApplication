@@ -3,6 +3,7 @@ package com.flood_web.service;
 import com.flood_web.controller.Family;
 import com.flood_web.data.entity.FamilyEntity;
 import com.flood_web.data.repository.FamilyRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class FamilyCrudService implements CrudService<Family>{
 
     @Autowired
     FamilyRepository familyRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
 
     @Override

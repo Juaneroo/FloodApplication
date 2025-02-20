@@ -3,6 +3,7 @@ package com.flood_web.service;
 import com.flood_web.controller.River;
 import com.flood_web.data.entity.RiverEntity;
 import com.flood_web.data.repository.RiverRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,24 +19,15 @@ public class RiverCrudService implements CrudService<River>{
     @Autowired
     RiverRepository riverRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
 
     @Override
     public void save(River river) {
 
-        String idRiver = null;
-        if (river.getId() != null && !river.getId().trim().isEmpty()){
-            idRiver = river.getId();
-        }else{
-            idRiver = UUID.randomUUID().toString().substring(0, 8);
-        }
-
-        RiverEntity riverEntity = RiverEntity.builder()
-                .withId(idRiver)
-                .withName(river.getName())
-                .withActive(river.isActive())
-                .build();
+        RiverEntity riverEntity = modelMapper.map(river, RiverEntity.class);
         riverRepository.save(riverEntity);
-
     }
 
     @Override
@@ -43,11 +35,7 @@ public class RiverCrudService implements CrudService<River>{
         Iterable<RiverEntity> entities = riverRepository.findAll();
 
         return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> River.builder()
-                        .withId(entity.getId())
-                        .withName(entity.getName())
-                        .withActive(entity.isActive())
-                        .build()
+                .map(entity -> modelMapper.map(entity, River.class)
                 )
                 .collect(Collectors.toList());
 
@@ -63,11 +51,7 @@ public class RiverCrudService implements CrudService<River>{
         }
 
         RiverEntity riverEntity = foundRiver.get();
-        River river = River.builder()
-                .withId(riverEntity.getId())
-                .withName(riverEntity.getName())
-                .withActive(riverEntity.isActive())
-                .build();
+        River river = modelMapper.map(riverEntity, River.class);
 
         return Optional.of(river);
     }
