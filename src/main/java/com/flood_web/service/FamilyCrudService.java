@@ -13,7 +13,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service ("familyCrudService")
+@Service
 public class FamilyCrudService implements CrudService<Family>{
 
     @Autowired
@@ -26,18 +26,7 @@ public class FamilyCrudService implements CrudService<Family>{
     @Override
     public void save(Family family) {
 
-        String idFamily = null;
-        if (family.id() != null && !family.id().trim().isEmpty()){
-            idFamily = family.id();
-        }else{
-            idFamily = UUID.randomUUID().toString().substring(0, 8);
-        }
-
-        FamilyEntity familyEntity = FamilyEntity.builder()
-                .withId(idFamily)
-                .withName(family.name())
-                .withActive(family.active())
-                .build();
+        FamilyEntity familyEntity = modelMapper.map(family, FamilyEntity.class);
         familyRepository.save(familyEntity);
 
     }
@@ -47,13 +36,8 @@ public class FamilyCrudService implements CrudService<Family>{
         Iterable<FamilyEntity> entities = familyRepository.findAll();
 
         return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> Family.builder()
-                        .withId(entity.getId())
-                        .withName(entity.getName())
-                        .withActive(entity.isActive())
-                        .build()
-                )
-                .collect(Collectors.toList());
+                .map(entity -> modelMapper.map(entity, Family.class)
+                ).collect(Collectors.toList());
 
 
     }
@@ -66,11 +50,8 @@ public class FamilyCrudService implements CrudService<Family>{
         }
 
         FamilyEntity familyEntity = foundFamily.get();
-        Family family = Family.builder()
-                .withId(familyEntity.getId())
-                .withName(familyEntity.getName())
-                .withActive(familyEntity.isActive())
-                .build();
+        Family family = modelMapper.map(familyEntity, Family.class);
+
 
         return Optional.of(family);
     }
