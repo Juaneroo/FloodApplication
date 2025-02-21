@@ -1,5 +1,6 @@
 package com.flood_web.controller;
 
+import com.flood_web.service.FamilyCrudService;
 import com.flood_web.service.FamilyMembersCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,16 @@ public class FamilyMembersController {
     @Autowired
     FamilyMembersCrudService familyMembersCrudService;
 
+    @Autowired
+    FamilyCrudService familyCrudService;
+
     @GetMapping("/familyMembers")
     public ModelAndView getFamilyMembers(){
 
         return new ModelAndView(VIEW_PATH  + "/familyMembers")
                 .addObject("familyMember", FamilyMembers.builder().build())
-                .addObject("familyMembers", familyMembersCrudService.listAll());
+                .addObject("familyMembers", familyMembersCrudService.listAll())
+                .addObject("families", familyCrudService.listAll());
 
     }
 
@@ -32,7 +37,8 @@ public class FamilyMembersController {
 
         return new ModelAndView(VIEW_PATH  + "/familyMembers")
                 .addObject("familyMember", familyMembersCrudService.findById(id).get())
-                .addObject("familyMembers", familyMembersCrudService.listAll());
+                .addObject("familyMembers", familyMembersCrudService.listAll())
+                .addObject("families", familyCrudService.listAll());
 
     }
 

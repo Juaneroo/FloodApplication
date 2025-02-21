@@ -292,6 +292,17 @@
                   <label for="floatingTelephone">Teléfono</label>
                 </div>
               </div>
+              <div class="col-md-12">
+                <div class="form-floating">
+                  <select th:field="*{family.id}" class="form-select" aria-label="Default select example" id="txtFamilyMembers">
+                    <option value="*" selected>Seleccione una opción</option>
+                    <option th:each="family : ${families}"
+                            th:value="${family.id}"
+                            th:text="${family.name}"></option>
+                  </select>
+                  <label for="txtFamilyMembers">Asocie una familia</label>
+                </div>
+              </div>
 
               <!-- Checkbox para "Activo" -->
               <div class="col-md-12">
@@ -324,6 +335,7 @@
                 <th>Cédula</th>
                 <th>Nombres y Apellidos</th>
                 <th>Celular</th>
+                <th>Familia</th>
                 <th>Activo</th>
                 <th>Editar</th>
               </tr>
@@ -337,6 +349,7 @@
                 <td><span th:text="${familyMember.idNumber}">Cédula</span></td>
                 <td><span th:text="${familyMember.name}">Nombres y Apellidos</span></td>
                 <td><span th:text="${familyMember.telephone}">Celular</span></td>
+                <td><span th:text="${familyMember.family.name}"> Familia</span></td>
                 <td><span th:text="${familyMember.active ? 'Sí' : 'No'}"
                           th:class="${familyMember.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                 </td>
@@ -354,14 +367,14 @@
 </main>
 
         <div th:if="${showFamilyMembersSavedOk}"
-             class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+             class="col-md-12 offset-md-3 alert alert-success alert-dismissible fade show" role="alert">
           <i class="bi bi-check-circle me-1"></i>
           ¡El miembro de la familia ha sido registrada o modificada con éxito!
           <button type="button" class="btn-close" data-bs-dismiss="alert"
                   aria-label="Close"></button>
         </div>
         <div th:if="${showFamilyMembersSavedError}"
-             class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+             class="col-md-12 offset-md-3 alert alert-danger alert-dismissible fade show ms-auto" role="alert">
           <i class="bi bi-exclamation-octagon me-1"></i>
           ¡No se ha podido registrar o modificar el miembro de la familia!
           <button type="button" class="btn-close" data-bs-dismiss="alert"

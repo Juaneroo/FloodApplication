@@ -284,7 +284,7 @@
                                                     th:value="${zonee.id}"
                                                     th:text="${zonee.name}"></option>
                                         </select>
-                                        <label for="txtSensor">Asocie una zona</label>
+                                        <label for="txtFamily">Asocie una zona</label>
                                     </div>
                                 </div>
                                 <div class="form-check">
@@ -348,7 +348,7 @@
                             <tr th:each="family : ${families}">
                                 <td><span th:text="${family.id}"> ID </span></td>
                                 <td><span th:text="${family.name}"> Familia </span></td>
-
+                                <td><span th:text="${family.zone.name}"> Familia </span></td>
                                 <td><span th:text="${family.active ? 'Sí' : 'No'}"
                                           th:class="${family.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                                 </td>

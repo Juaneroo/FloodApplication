@@ -1,14 +1,26 @@
 package com.flood_web.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder(setterPrefix = "with")
-public record FamilyMembers(String id,
-                     String name,
+public class FamilyMembers{
+    private String id;
 
-                     String idNumber,
+    private String name;
 
-                     String telephone,
+    private String idNumber;
 
-                     Boolean active) {
+    private String telephone;
+
+    private boolean active;
+
+    private Family family;
 }
