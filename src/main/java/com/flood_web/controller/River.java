@@ -18,4 +18,6 @@ public class River {
     private String name;
 
     private boolean active;
+
+    private String depth;
 }

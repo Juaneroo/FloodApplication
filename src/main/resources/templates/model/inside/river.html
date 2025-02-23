@@ -273,8 +273,14 @@
                                             <div class="form-floating">
                                                 <input th:field="*{name}" type="text" class="form-control"
                                                        id="floatingName" maxlength="159" required
-                                                       placeholder="Nombre del sensor">
+                                                       placeholder="Nombre del rio">
                                                 <label for="floatingName">Nombre</label>
+                                            </div>
+                                            <div class="form-floating">
+                                                <input th:field="*{depth}" type="text" class="form-control"
+                                                       id="floatingDepth" maxlength="159" required
+                                                       placeholder="Profundidad del rio">
+                                                <label for="floatingName">Profundidad</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" th:field="*{active}"
@@ -325,6 +331,7 @@
                                         <tr>
                                             <th> ID</th>
                                             <th> Rio</th>
+                                            <th> Profundidad</th>
                                             <th> Activo</th>
                                             <th> Editar</th>
                                         </tr>
@@ -336,6 +343,7 @@
                                         <tr th:each="river : ${rivers}">
                                             <td><span th:text="${river.id}"> ID </span></td>
                                             <td><span th:text="${river.name}"> Rio </span></td>
+                                            <td><span th:text="${river.depth}"> Profundidad </span></td>
                                             <td><span th:text="${river.active ? 'Sí' : 'No'}"
                                                       th:class="${river.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                                             </td>

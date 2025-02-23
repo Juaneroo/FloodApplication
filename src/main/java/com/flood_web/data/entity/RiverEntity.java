@@ -29,4 +29,7 @@ public class RiverEntity {
 
     @Column
     private boolean active;
+
+    @Column
+    private String depth;
 }
