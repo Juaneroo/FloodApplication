@@ -267,7 +267,7 @@
 
             <form action="#" th:action="@{/inside/familyMembers}" method="post" th:object="${familyMember}" class="row g-3">
               <!-- Campo oculto para el ID -->
-              <input th:field="*{id}" type="hidden">
+              <input th:field="*{idNumber}" type="hidden">
 
               <!-- Campo para la cédula -->
               <div class="col-md-12">
@@ -332,7 +332,6 @@
               <thead>
               <tr>
                 <th>ID</th>
-                <th>Cédula</th>
                 <th>Nombres y Apellidos</th>
                 <th>Celular</th>
                 <th>Familia</th>
@@ -345,7 +344,6 @@
                 <td colspan="6">No hay miembros de familias</td>
               </tr>
               <tr th:each="familyMember : ${familyMembers}">
-                <td><span th:text="${familyMember.id}">ID</span></td>
                 <td><span th:text="${familyMember.idNumber}">Cédula</span></td>
                 <td><span th:text="${familyMember.name}">Nombres y Apellidos</span></td>
                 <td><span th:text="${familyMember.telephone}">Celular</span></td>
@@ -354,7 +352,7 @@
                           th:class="${familyMember.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                 </td>
                 <td>
-                  <a th:href="@{/inside/familyMembers/{id}(id=${familyMember.id})}">Editar</a>
+                  <a th:href="@{/inside/familyMembers/{idNumber}(idNumber=${familyMember.idNumber})}">Editar</a>
                 </td>
               </tr>
               </tbody>

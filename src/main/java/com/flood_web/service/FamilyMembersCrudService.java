@@ -46,9 +46,9 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     }
 
     @Override
-    public Optional<FamilyMembers> findById(String id) {
+    public Optional<FamilyMembers> findById(String idNumber) {
 
-        Optional<FamilyMembersEntity> foundFamilyMembers = this.familyMembersRepository.findById(id);
+        Optional<FamilyMembersEntity> foundFamilyMembers = this.familyMembersRepository.findById(idNumber);
         if (foundFamilyMembers.isEmpty()){
             return Optional.of(FamilyMembers.builder().build());
         }

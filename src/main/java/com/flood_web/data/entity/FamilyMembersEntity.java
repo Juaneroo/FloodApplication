@@ -17,10 +17,6 @@ import java.util.UUID;
 public class FamilyMembersEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
     private String idNumber;
 
     @Column

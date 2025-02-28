@@ -12,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
 public class FamilyMembers{
-    private String id;
 
     private String name;
 
