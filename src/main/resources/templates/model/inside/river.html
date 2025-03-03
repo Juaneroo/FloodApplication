@@ -260,7 +260,7 @@
 
                 <section class="section">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="card">
 
                                 <div class="card-body">
@@ -281,6 +281,17 @@
                                                        id="floatingDepth" maxlength="159" required
                                                        placeholder="Profundidad del rio">
                                                 <label for="floatingName">Profundidad</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-floating">
+                                                    <select th:field="*{sensor.id}" class="form-select" aria-label="Default select example" id="txtSensor">
+                                                        <option value="*" selected>Seleccione una opción</option>
+                                                        <option th:each="sensorr : ${sensors}"
+                                                                th:value="${sensorr.id}"
+                                                                th:text="${sensorr.name}"></option>
+                                                    </select>
+                                                    <label for="txtSensor">Asocie un Sensor</label>
+                                                </div>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" th:field="*{active}"
@@ -319,7 +330,7 @@
 
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Rios</h5>
@@ -332,6 +343,7 @@
                                             <th> ID</th>
                                             <th> Rio</th>
                                             <th> Profundidad</th>
+                                            <th> Sensor</th>
                                             <th> Activo</th>
                                             <th> Editar</th>
                                         </tr>
@@ -344,6 +356,7 @@
                                             <td><span th:text="${river.id}"> ID </span></td>
                                             <td><span th:text="${river.name}"> Rio </span></td>
                                             <td><span th:text="${river.depth}"> Profundidad </span></td>
+                                            <td><span th:text="${river.sensor.name}"> Sensor Asociado </span></td>
                                             <td><span th:text="${river.active ? 'Sí' : 'No'}"
                                                       th:class="${river.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                                             </td>

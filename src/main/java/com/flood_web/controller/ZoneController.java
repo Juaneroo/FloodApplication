@@ -1,5 +1,6 @@
 package com.flood_web.controller;
 
+import com.flood_web.service.RiverCrudService;
 import com.flood_web.service.SensorCrudService;
 import com.flood_web.service.ZoneCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ZoneController {
     ZoneCrudService zoneCrudService;
 
     @Autowired
-    SensorCrudService sensorCrudService;
+    RiverCrudService riverCrudService;
 
     @GetMapping("/zone")
     public ModelAndView getZone(){
@@ -28,7 +29,7 @@ public class ZoneController {
         return new ModelAndView(VIEW_PATH  + "/zone")
                 .addObject("zone", Zone.builder().build())
                 .addObject("zones", zoneCrudService.listAll())
-                .addObject("sensors", sensorCrudService.listAll());
+                .addObject("rivers", riverCrudService.listAll());
 
     }
 
@@ -38,7 +39,7 @@ public class ZoneController {
         return new ModelAndView(VIEW_PATH  + "/zone")
                 .addObject("zone", zoneCrudService.findById(id).get())
                 .addObject("zones", zoneCrudService.listAll())
-                .addObject("sensors", sensorCrudService.listAll());
+                .addObject("rivers", riverCrudService.listAll());
     }
 
 

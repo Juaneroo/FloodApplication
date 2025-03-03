@@ -279,13 +279,13 @@
                                         <!-- Aqui dropbox para asociar zonas rios a sensor-->
                                         <div class="col-md-12">
                                             <div class="form-floating">
-                                                <select th:field="*{sensor.id}" class="form-select" aria-label="Default select example" id="txtSensor">
-                                                    <option value="*" selected>Seleccione un sensor</option>
-                                                    <option th:each="sensor : ${sensors}"
-                                                            th:value="${sensor.id}"
-                                                            th:text="${sensor.name}"></option>
+                                                <select th:field="*{river.id}" class="form-select" aria-label="Default select example" id="txtRiver">
+                                                    <option value="*" selected>Seleccione una opción</option>
+                                                    <option th:each="river : ${rivers}"
+                                                            th:value="${river.id}"
+                                                            th:text="${river.name}"></option>
                                                 </select>
-                                                <label for="txtSensor">Asignar un sensor</label>
+                                                <label for="txtRiver">Asignar un Rio</label>
                                             </div>
                                         </div>
                                         <div class="form-check">
@@ -333,7 +333,7 @@
                                     <tr>
                                         <th> ID </th>
                                         <th> Zona </th>
-                                        <th> Sensor asignado </th>
+                                        <th> Rio asignado </th>
                                         <th> ¿Activa? </th>
                                         <th> Editar </th>
                                     </tr>
@@ -345,7 +345,7 @@
                                     <tr th:each="zone : ${zones}">
                                         <td><span th:text="${zone.id}"> ID </span></td>
                                         <td><span th:text="${zone.name}"> Zona </span></td>
-                                        <td><span th:text="${zone.sensor.name}"> Sensor asignado </span></td>
+                                        <td><span th:text="${zone.river.name}"> Rio asignado </span></td>
                                         <td><span th:text="${zone.active ? 'Sí' : 'No'}"
                                                   th:class="${zone.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span></td>
                                         <td>

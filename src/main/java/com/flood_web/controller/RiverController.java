@@ -1,7 +1,9 @@
 package com.flood_web.controller;
 
+import com.flood_web.service.CrudService;
 import com.flood_web.service.RiverCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,12 +20,17 @@ public class RiverController {
     @Autowired
     RiverCrudService riverCrudService;
 
+    @Autowired
+    @Qualifier("sensorCrudService")
+    private CrudService<Sensor> sensorCrudService;
+
     @GetMapping("/river")
     public ModelAndView getRivers(){
 
         return new ModelAndView(VIEW_PATH  + "/river")
                 .addObject("river", River.builder().build())
-                .addObject("rivers", riverCrudService.listAll());
+                .addObject("rivers", riverCrudService.listAll())
+                .addObject("sensors", sensorCrudService.listAll());
 
     }
 
@@ -32,7 +39,8 @@ public class RiverController {
 
        return new ModelAndView(VIEW_PATH  + "/river")
                 .addObject("river", riverCrudService.findById(id).get())
-                .addObject("rivers", riverCrudService.listAll());
+                .addObject("rivers", riverCrudService.listAll())
+                .addObject("sensors", sensorCrudService.listAll());
 
     }
 

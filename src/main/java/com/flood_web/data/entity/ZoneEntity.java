@@ -43,6 +43,6 @@ public class ZoneEntity {
     private boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "sensor_id")
-    private SensorEntity sensor;
+    @JoinColumn(name = "river_id")
+    private RiverEntity river;
 }

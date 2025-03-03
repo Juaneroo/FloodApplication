@@ -16,7 +16,6 @@ import java.util.UUID;
 @Builder(setterPrefix = "with")
 public class Sensor{
     String id;
-                     String name;
-                     River river;
-                     Boolean active;
+    String name;
+    Boolean active;
 }

@@ -20,4 +20,6 @@ public class River {
     private boolean active;
 
     private String depth;
+
+    Sensor sensor;
 }

@@ -46,7 +46,4 @@ public class SensorEntity {
             inverseJoinColumns = @JoinColumn(name = "zone_id"))
     private List<Zone> zones;*/
 
-    @ManyToOne
-    @JoinColumn(name = "river_id")
-    private RiverEntity river;
 }

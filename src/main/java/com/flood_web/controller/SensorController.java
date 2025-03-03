@@ -17,26 +17,20 @@ public class SensorController {
     @Qualifier("sensorCrudService")
     private CrudService<Sensor> sensorCrudService;
 
-    @Autowired
-    @Qualifier("riverCrudService")
-    private CrudService<River> riverCrudService;
-
     private static final String VIEW_PATH = "/model/inside";
 
     @GetMapping("/sensor")
     private ModelAndView getSensor() {
         return new ModelAndView(VIEW_PATH  + "/sensor")
                 .addObject("sensor", Sensor.builder().build())
-                .addObject("sensors", sensorCrudService.listAll())
-                .addObject("rivers", riverCrudService.listAll());
+                .addObject("sensors", sensorCrudService.listAll());
     }
 
     @GetMapping("/sensor/{id}")
     private ModelAndView getSensorById(@PathVariable String id) {
         return new ModelAndView(VIEW_PATH  + "/sensor")
                 .addObject("sensor", sensorCrudService.findById(id).get())
-                .addObject("sensors", sensorCrudService.listAll())
-                .addObject("rivers", riverCrudService.listAll());
+                .addObject("sensors", sensorCrudService.listAll());
     }
 
     @PostMapping("/sensor")

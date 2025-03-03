@@ -19,5 +19,5 @@ public class Zone{
 
     private boolean active;
 
-    private Sensor sensor;
+    private River river;
 }
