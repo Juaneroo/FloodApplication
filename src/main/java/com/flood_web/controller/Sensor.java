@@ -17,5 +17,6 @@ import java.util.UUID;
 public class Sensor{
     String id;
     String name;
+    String riskExpression;
     Boolean active;
 }

@@ -2,6 +2,7 @@ package com.flood_web.controller;
 
 import com.flood_web.service.CrudService;
 import com.flood_web.service.SensorCrudService;
+import com.flood_web.service.risk.RiskLevelEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class SensorController {
     @Autowired
     @Qualifier("sensorCrudService")
     private CrudService<Sensor> sensorCrudService;
+
+    @Autowired
+    private RiskLevelEvaluator riskLevelEvaluator;
 
     private static final String VIEW_PATH = "/model/inside";
 
@@ -38,6 +42,16 @@ public class SensorController {
 
         boolean showSensorSavedOk = true;
         boolean showSensorSavedError = false;
+
+        if(!riskLevelEvaluator.evaluateExpression(sensor.riskExpression)){
+            redirectAttributes.addFlashAttribute("showSensorSavedOk", false)
+                    .addFlashAttribute("showSensorSavedError", false)
+                    .addFlashAttribute("showExpressionError", true)
+                    .addFlashAttribute("expressionInfo", riskLevelEvaluator.getInconsistencies(sensor.riskExpression));
+
+            return "redirect:/inside/sensor";
+        }
+
         try{
             sensorCrudService.save(sensor);
         }catch (Exception ex){
@@ -45,9 +59,11 @@ public class SensorController {
             showSensorSavedError = true;
         }
 
-        //return new ModelAndView(VIEW_PATH  + "/update-2")
-                redirectAttributes.addFlashAttribute("showSensorSavedOk", showSensorSavedOk)
-                        .addFlashAttribute("showSensorSavedError", showSensorSavedError);
+        redirectAttributes.addFlashAttribute("showSensorSavedOk", showSensorSavedOk)
+                        .addFlashAttribute("showSensorSavedError", showSensorSavedError)
+                .addFlashAttribute("showExpressionError", false)
+                .addFlashAttribute("expressionInfo", "");
+
 
         return "redirect:/inside/sensor";
 

@@ -53,4 +53,15 @@ public class SensorCrudService implements CrudService<Sensor>{
         Sensor sensor = modelMapper.map(sensorEntity, Sensor.class);
         return Optional.of(sensor);
     }
+
+
+    public Optional<Sensor> findByIdToEvaluate(String id) {
+        Optional<SensorEntity> foundSensor = this.sensorRepository.findById(id);
+        if (foundSensor.isEmpty()){
+            return Optional.ofNullable(null);
+        }
+        SensorEntity sensorEntity = foundSensor.get();
+        Sensor sensor = modelMapper.map(sensorEntity, Sensor.class);
+        return Optional.of(sensor);
+    }
 }

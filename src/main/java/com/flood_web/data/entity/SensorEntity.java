@@ -41,9 +41,9 @@ public class SensorEntity {
     @Column
     private boolean active;
 
-    /*@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinTable(name = "sensor_zone", joinColumns = @JoinColumn(name = "sensor_id"),
-            inverseJoinColumns = @JoinColumn(name = "zone_id"))
-    private List<Zone> zones;*/
+    @Column(name = "risk_expression", columnDefinition = "TEXT")
+    private String riskExpression;
+
+
 
 }

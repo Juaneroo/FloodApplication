@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -56,5 +57,16 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
         FamilyMembers familyMembers = modelMapper.map(familyMembersEntity, FamilyMembers.class);
 
         return Optional.of(familyMembers);
+    }
+
+    public Set<FamilyMembers> findPeopleUnderRisk(String sensorUnderRisk){
+
+        List<FamilyMembersEntity> peopleUnderRisk = familyMembersRepository.findBySensorId(sensorUnderRisk);
+
+        return peopleUnderRisk
+                .stream()
+                .map(member -> modelMapper.map(member, FamilyMembers.class))
+                .collect(Collectors.toSet());
+
     }
 }
