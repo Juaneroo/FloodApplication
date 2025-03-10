@@ -31,7 +31,6 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
 
         FamilyMembersEntity familyMembersEntity = modelMapper.map(familyMembers, FamilyMembersEntity.class);
         familyMembersRepository.save(familyMembersEntity);
-
     }
 
     @Override

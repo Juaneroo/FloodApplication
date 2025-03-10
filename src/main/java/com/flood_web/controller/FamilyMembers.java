@@ -15,7 +15,9 @@ public class FamilyMembers{
 
     private String name;
 
-    private String idNumber;
+    private String cedula;
+
+    private String id;
 
     private String telephone;
 

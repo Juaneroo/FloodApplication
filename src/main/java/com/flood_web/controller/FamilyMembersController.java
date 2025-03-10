@@ -32,11 +32,11 @@ public class FamilyMembersController {
 
     }
 
-    @GetMapping("/familyMembers/{idNumber}")
-    public ModelAndView getFamilyMembersByIdNumber(@PathVariable String idNumber){
+    @GetMapping("/familyMembers/{id}")
+    public ModelAndView getFamilyMembersByIdNumber(@PathVariable String id){
 
         return new ModelAndView(VIEW_PATH  + "/familyMembers")
-                .addObject("familyMember", familyMembersCrudService.findById(idNumber).get())
+                .addObject("familyMember", familyMembersCrudService.findById(id).get())
                 .addObject("familyMembers", familyMembersCrudService.listAll())
                 .addObject("families", familyCrudService.listAll());
 

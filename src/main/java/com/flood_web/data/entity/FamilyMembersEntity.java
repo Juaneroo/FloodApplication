@@ -3,6 +3,7 @@ package com.flood_web.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.modelmapper.internal.bytebuddy.implementation.bind.MethodDelegationBinder;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +18,10 @@ import java.util.UUID;
 public class FamilyMembersEntity {
 
     @Id
-    private String idNumber;
+    private Long id;
+
+    @Column (unique = true)
+    private String cedula;
 
     @Column
     private String name;

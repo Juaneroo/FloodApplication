@@ -269,7 +269,7 @@
               <!-- Campo para la cédula -->
               <div class="col-md-12">
                 <div class="form-floating">
-                  <input th:field="*{idNumber}" type="text" class="form-control" id="floatingIdNumber" maxlength="159" required placeholder="Cédula">
+                  <input th:field="*{id}" type="text" class="form-control" id="floatingIdNumber" maxlength="159" required placeholder="Cédula">
                   <label for="floatingIdNumber">Cédula</label>
                 </div>
               </div>
@@ -341,7 +341,7 @@
                 <td colspan="6">No hay miembros de familias</td>
               </tr>
               <tr th:each="familyMember : ${familyMembers}">
-                <td><span th:text="${familyMember.idNumber}">Cédula</span></td>
+                <td><span th:text="${familyMember.id}">Cédula</span></td>
                 <td><span th:text="${familyMember.name}">Nombres y Apellidos</span></td>
                 <td><span th:text="${familyMember.telephone}">Celular</span></td>
                 <td><span th:text="${familyMember.family.name}"> Familia</span></td>
@@ -349,7 +349,7 @@
                           th:class="${familyMember.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                 </td>
                 <td>
-                  <a th:href="@{/inside/familyMembers/{idNumber}(idNumber=${familyMember.idNumber})}">Editar</a>
+                  <a th:href="@{/inside/familyMembers/{idNumber}(idNumber=${familyMember.id})}">Editar</a>
                 </td>
               </tr>
               </tbody>
