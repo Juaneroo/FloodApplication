@@ -1,16 +1,24 @@
 package com.flood_web.service.risk;
 
 public enum RiskLevel {
-    ZERO(1, "No risk"),
-    VERY_LOW(2, "Very low risk"),
-    LOW(3, "Low risk"),
-    MODERATE(4, "Moderate risk"),
-    CONSIDERABLE(5, "Considerable risk"),
-    HIGH(6, "High risk"),
-    VERY_HIGH(7, "Very high risk"),
-    IMMINENT_DANGER(8, "Imminent danger"),
-    EXTREME(9, "Extreme risk"),
-    DISASTER(10, "Disaster imminent");
+    ZERO(1, "Sin riesgo"),
+
+    VERY_LOW(2, "Riesgo muy bajo"),
+
+    LOW(3, "Riesgo bajo"),
+
+    MODERATE(4, "Riesgo moderado"),
+    CONSIDERABLE(5, "Riesgo considerable"),
+
+    HIGH(6, "Riesgo alto"),
+
+    VERY_HIGH(7, "Riesgo muy alto"),
+
+    IMMINENT_DANGER(8, "Peligro inminente"),
+
+    EXTREME(9, "Riesgo extremo"),
+
+    DISASTER(10, "Desastre inminente");
 
     private final int level;
     private final String description;

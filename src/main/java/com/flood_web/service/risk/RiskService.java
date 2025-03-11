@@ -1,10 +1,11 @@
 package com.flood_web.service.risk;
 
 import com.flood_web.controller.FamilyMembers;
-import com.flood_web.controller.River;
 import com.flood_web.controller.Sensor;
-import com.flood_web.service.FamilyMembersCrudService;
-import com.flood_web.service.SensorCrudService;
+import com.flood_web.service.crud.FamilyMembersCrudService;
+import com.flood_web.service.crud.SensorCrudService;
+import com.flood_web.service.notification.CallStrategy;
+import com.flood_web.service.notification.SmsStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,12 @@ public class RiskService {
     @Autowired
     private RiskLevelEvaluator riskLevelEvaluator;
 
+    @Autowired
+    private SmsStrategy smsStrategy;
+
+    @Autowired
+    private CallStrategy callStrategy;
+
 
     public void handleRisk(String riverId, int currentLevel){
         Optional<Sensor> sensorOptional = sensorCrudService.findByIdToEvaluate(riverId);
@@ -43,16 +50,29 @@ public class RiskService {
             return;
         }
 
-        handleNotifications(sensor);
+        handleNotifications(sensor, riskLevelEvaluator.getRiskLevel(currentLevel, sensor.getRiskExpression()));
 
     }
 
-    public void handleNotifications(Sensor sensorUnderRisk){
+    public void handleNotifications(Sensor sensorUnderRisk, RiskLevel riskLevel){
 
         Set<FamilyMembers> peopleForNotification = familyMembersCrudService.findPeopleUnderRisk(sensorUnderRisk.getId());
 
         peopleForNotification.forEach(
-                personUnderRisk -> log.info("Notifying {} to the number {}", personUnderRisk.getName(), personUnderRisk.getTelephone())
-        );
+                (personUnderRisk) -> {
+                    smsStrategy.notifyEvent(
+                            "+57" + personUnderRisk.getTelephone(),
+                            MessageTemplate.TEMPLATE_1
+                                    .replace("[name]", personUnderRisk.getName())
+                                    .replace("[risk]", riskLevel.getDescription())
+                    );
+                    callStrategy.notifyEvent(
+                            "+57" + personUnderRisk.getTelephone(),
+                            MessageTemplate.TEMPLATE_1
+                                    .replace("[name]", personUnderRisk.getName())
+                                    .replace("[risk]", riskLevel.getDescription())
+                    );
+                }
+                );
     }
 }

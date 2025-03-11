@@ -268,8 +268,11 @@
             <form action="#" th:action="@{/inside/familyMembers}" method="post" th:object="${familyMember}" class="row g-3">
               <!-- Campo para la cédula -->
               <div class="col-md-12">
+                <input th:field="*{id}" type="hidden">
                 <div class="form-floating">
-                  <input th:field="*{id}" type="text" class="form-control" id="floatingIdNumber" maxlength="159" required placeholder="Cédula">
+                  <input th:field="*{cedula}" type="text" class="form-control" id="floatingIdNumber"
+                         pattern="^\d{6,10}$" title="Debe contener entre 6 y 10 dígitos numéricos"
+                         required placeholder="Cédula">
                   <label for="floatingIdNumber">Cédula</label>
                 </div>
               </div>
@@ -277,22 +280,26 @@
               <!-- Campo para nombres y apellidos -->
               <div class="col-md-12">
                 <div class="form-floating">
-                  <input th:field="*{name}" type="text" class="form-control" id="floatingName" maxlength="159" required placeholder="Nombres y Apellidos">
-                  <label for="floatingName">Nombres y Apellidos</label>
+                  <input th:field="*{name}" type="text" class="form-control" id="floatingName"
+                         pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
+                         placeholder="Nombre y Apellido" required>
+                  <label for="floatingName">Primer nombre y pellido</label>
                 </div>
               </div>
 
               <!-- Campo para teléfono -->
               <div class="col-md-12">
                 <div class="form-floating">
-                  <input th:field="*{telephone}" type="text" class="form-control" id="floatingTelephone" maxlength="159" required placeholder="Teléfono">
+                  <input th:field="*{telephone}" type="text" class="form-control" id="floatingTelephone" pattern="^\d{10}$"
+                         title="Debe contener exactamente 10 números" placeholder="Teléfono" required>
                   <label for="floatingTelephone">Teléfono</label>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-floating">
-                  <select th:field="*{family.id}" class="form-select" aria-label="Default select example" id="txtFamilyMembers">
-                    <option value="*" selected>Seleccione una opción</option>
+                  <select th:field="*{family.id}" class="form-select" aria-label="Default select example"
+                          id="txtFamilyMembers" title="Debe elegir una familia" required>
+                    <option value="*" disabled selected>Seleccione una familia</option>
                     <option th:each="family : ${families}"
                             th:value="${family.id}"
                             th:text="${family.name}"></option>

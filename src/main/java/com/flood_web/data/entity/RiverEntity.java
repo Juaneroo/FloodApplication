@@ -19,7 +19,7 @@ public class RiverEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
@@ -29,6 +29,6 @@ public class RiverEntity {
     private String depth;
 
     @ManyToOne
-    @JoinColumn(name = "sensor_id")
+    @JoinColumn(name = "sensor_id", nullable = false)
     private SensorEntity sensor;
 }

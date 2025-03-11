@@ -1,11 +1,8 @@
-package com.flood_web.service;
+package com.flood_web.service.crud;
 
 import com.flood_web.controller.FamilyMembers;
-import com.flood_web.controller.Zone;
-import com.flood_web.data.entity.FamilyMembersEntity;
-import com.flood_web.data.entity.ZoneEntity;
+import com.flood_web.data.entity.FamilyMemberEntity;
 import com.flood_web.data.repository.FamilyMembersRepository;
-import com.flood_web.data.repository.ZoneRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -30,13 +26,13 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     @Override
     public void save(FamilyMembers familyMembers) {
 
-        FamilyMembersEntity familyMembersEntity = modelMapper.map(familyMembers, FamilyMembersEntity.class);
-        familyMembersRepository.save(familyMembersEntity);
+        FamilyMemberEntity familyMemberEntity = modelMapper.map(familyMembers, FamilyMemberEntity.class);
+        familyMembersRepository.save(familyMemberEntity);
     }
 
     @Override
     public List<FamilyMembers> listAll() {
-        Iterable<FamilyMembersEntity> entities = familyMembersRepository.findAll();
+        Iterable<FamilyMemberEntity> entities = familyMembersRepository.findAll();
 
         return StreamSupport.stream(entities.spliterator(), false)
                 .map(entity -> modelMapper.map(entity, FamilyMembers.class)
@@ -48,20 +44,20 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     @Override
     public Optional<FamilyMembers> findById(String idNumber) {
 
-        Optional<FamilyMembersEntity> foundFamilyMembers = this.familyMembersRepository.findById(idNumber);
+        Optional<FamilyMemberEntity> foundFamilyMembers = this.familyMembersRepository.findById(idNumber);
         if (foundFamilyMembers.isEmpty()){
             return Optional.of(FamilyMembers.builder().build());
         }
 
-        FamilyMembersEntity familyMembersEntity = foundFamilyMembers.get();
-        FamilyMembers familyMembers = modelMapper.map(familyMembersEntity, FamilyMembers.class);
+        FamilyMemberEntity familyMemberEntity = foundFamilyMembers.get();
+        FamilyMembers familyMembers = modelMapper.map(familyMemberEntity, FamilyMembers.class);
 
         return Optional.of(familyMembers);
     }
 
     public Set<FamilyMembers> findPeopleUnderRisk(String sensorUnderRisk){
 
-        List<FamilyMembersEntity> peopleUnderRisk = familyMembersRepository.findBySensorId(sensorUnderRisk);
+        List<FamilyMemberEntity> peopleUnderRisk = familyMembersRepository.findBySensorId(sensorUnderRisk);
 
         return peopleUnderRisk
                 .stream()

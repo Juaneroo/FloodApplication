@@ -1,7 +1,6 @@
 package com.flood_web.controller;
 
-import com.flood_web.service.CrudService;
-import com.flood_web.service.SensorCrudService;
+import com.flood_web.service.crud.CrudService;
 import com.flood_web.service.risk.RiskLevelEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,15 +1,12 @@
 package com.flood_web.controller;
 
-import com.flood_web.service.RiverCrudService;
-import com.flood_web.service.SensorCrudService;
-import com.flood_web.service.ZoneCrudService;
+import com.flood_web.service.crud.RiverCrudService;
+import com.flood_web.service.crud.ZoneCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/inside")

@@ -89,15 +89,20 @@ public class RiskLevelEvaluator {
      * Determines if a notification should be sent based on the given height in meters.
      * @param meters The height in meters.
      * @param expression The risk-level expression (multiline string).
-     * @return True if the corresponding risk level is >= 5, false otherwise.
-     */
-    /**
-     * Determines if a notification should be sent based on the given height in meters.
-     * @param meters The height in meters.
-     * @param expression The risk-level expression (multiline string).
-     * @return True if the corresponding risk level is >= 5, false otherwise.
+     * @return True if the corresponding risk level is >= CONSIDERABLE (5), false otherwise.
      */
     public boolean shouldNotify(int meters, String expression) {
+        RiskLevel riskLevel = getRiskLevel(meters, expression);
+        return riskLevel.getLevel() >= RiskLevel.CONSIDERABLE.getLevel();
+    }
+
+    /**
+     * Finds the risk level associated with a given height in meters.
+     * @param meters The height in meters.
+     * @param expression The risk-level expression (multiline string).
+     * @return The corresponding RiskLevel enum, or ZERO if no matching height is found.
+     */
+    public RiskLevel getRiskLevel(int meters, String expression) {
         Pattern pattern = Pattern.compile("^(\\d+)=(\\d+)m$", Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(expression);
 
@@ -109,15 +114,9 @@ public class RiskLevelEvaluator {
             metersToRisk.put(height, riskLevel);
         }
 
-        // Find the highest level that is still <= meters
+        // Find the highest risk level that is still <= meters
         Map.Entry<Integer, Integer> entry = metersToRisk.floorEntry(meters);
 
-        if (entry != null) {
-            int riskLevel = entry.getValue();
-            return riskLevel >= 5; // Notify if risk level is 5 or higher
-        } else {
-            System.out.println("⚠️ Advertencia: No se encontró una correspondencia para " + meters + "m en la expresión.");
-            return false;
-        }
+        return (entry != null) ? RiskLevel.fromNumber(entry.getValue()) : RiskLevel.ZERO;
     }
 }

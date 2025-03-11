@@ -1,9 +1,6 @@
-package com.flood_web.service;
+package com.flood_web.service.crud;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flood_web.controller.River;
 import com.flood_web.controller.Sensor;
-import com.flood_web.data.entity.RiverEntity;
 import com.flood_web.data.entity.SensorEntity;
 import com.flood_web.data.repository.SensorRepository;
 import org.modelmapper.ModelMapper;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

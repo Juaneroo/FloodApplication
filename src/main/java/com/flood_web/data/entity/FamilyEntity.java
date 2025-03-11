@@ -37,18 +37,13 @@ public class FamilyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
     private boolean active;
 
-    /*@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinTable(name = "family_zone", joinColumns = @JoinColumn(name = "family_id"),
-            inverseJoinColumns = @JoinColumn(name = "zone_id"))
-    private List<ZoneEntity> zones;*/
-
     @ManyToOne
-    @JoinColumn(name = "zone_id")
+    @JoinColumn(name = "zone_id", nullable = false)
     private ZoneEntity zone;
 }

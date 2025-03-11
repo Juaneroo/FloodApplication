@@ -36,13 +36,13 @@ public class ZoneEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
     private boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "river_id")
+    @JoinColumn(name = "river_id", nullable = false)
     private RiverEntity river;
 }

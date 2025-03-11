@@ -1,4 +1,4 @@
-package com.flood_web.service;
+package com.flood_web.service.crud;
 
 import java.util.List;
 import java.util.Optional;

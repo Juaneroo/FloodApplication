@@ -1,4 +1,4 @@
-package com.flood_web.service;
+package com.flood_web.service.crud;
 
 import com.flood_web.controller.Zone;
 import com.flood_web.data.entity.ZoneEntity;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
