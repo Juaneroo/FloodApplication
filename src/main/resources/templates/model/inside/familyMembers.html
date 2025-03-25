@@ -198,53 +198,8 @@
 </header><!-- End Header -->
 
 <!-- ======= Sidebar ======= -->
- <aside id="sidebar" class="sidebar">
-
-  <ul class="sidebar-nav" id="sidebar-nav">
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="index.html">
-        <i class="bi bi-grid"></i>
-        <span>Dashboard</span>
-      </a>
-    </li><!-- End Dashboard Nav -->
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>Gestión</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="registro-sensor.html">
-            <i class="bi bi-circle"></i><span>Sensores</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="components-accordion.html">
-            <i class="bi bi-circle"></i><span>Rios</span>
-          </a>
-        </li>
-        <li>
-          <a href="components-badges.html">
-            <i class="bi bi-circle"></i><span>Usuarios</span>
-          </a>
-        </li>
-        <li>
-          <a href="components-breadcrumbs.html">
-            <i class="bi bi-circle"></i><span>Familias</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-contact.html">
-            <i class="bi bi-envelope"></i>
-            <span>Contacto</span>
-          </a>
-        </li><!-- End Contact Page Nav -->
-
-      </ul>
-    </aside><!-- End Sidebar-->
+<div th:replace="common/html/common-menu :: common-menu"></div>
+    <!-- End Sidebar-->
 
 <main id="main" class="main">
   <div class="pagetitle">
@@ -283,7 +238,7 @@
                   <input th:field="*{name}" type="text" class="form-control" id="floatingName"
                          pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
                          placeholder="Nombre y Apellido" required>
-                  <label for="floatingName">Primer nombre y pellido</label>
+                  <label for="floatingName">Primer nombre y apellido</label>
                 </div>
               </div>
 

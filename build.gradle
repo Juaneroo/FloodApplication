@@ -27,6 +27,7 @@ dependencies {
 	implementation(platform("software.amazon.awssdk:bom:2.27.21"))
 	implementation("software.amazon.awssdk:sns")
 	implementation ("software.amazon.awssdk:connect")
+	implementation 'com.twilio.sdk:twilio:9.0.0'
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

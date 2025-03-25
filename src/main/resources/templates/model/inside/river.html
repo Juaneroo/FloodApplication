@@ -198,53 +198,8 @@
 </header><!-- End Header -->
 
 <!-- ======= Sidebar ======= -->
-<aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="index.html">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Gestión</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="registro-sensor.html">
-                        <i class="bi bi-circle"></i><span>Sensores</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="components-accordion.html">
-                        <i class="bi bi-circle"></i><span>Rios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-badges.html">
-                        <i class="bi bi-circle"></i><span>Usuarios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-breadcrumbs.html">
-                        <i class="bi bi-circle"></i><span>Familias</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-contact.html">
-                        <i class="bi bi-envelope"></i>
-                        <span>Contacto</span>
-                    </a>
-                </li><!-- End Contact Page Nav -->
-
-            </ul>
- </aside><!-- End Sidebar-->
+<div th:replace="common/html/common-menu :: common-menu"></div>
+<!-- End Sidebar-->
 
             <main id="main" class="main">
 
@@ -276,12 +231,15 @@
                                                        placeholder="Nombre del rio">
                                                 <label for="floatingName">Nombre</label>
                                             </div>
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="form-floating">
                                                 <input th:field="*{depth}" type="text" class="form-control"
                                                        id="floatingDepth" maxlength="159" required
                                                        placeholder="Profundidad del rio">
                                                 <label for="floatingName">Profundidad</label>
                                             </div>
+                                        </div>
                                             <div class="col-md-12">
                                                 <div class="form-floating">
                                                     <select th:field="*{sensor.id}" class="form-select" aria-label="Default select example" id="txtSensor">
@@ -293,6 +251,7 @@
                                                     <label for="txtSensor">Asocie un Sensor</label>
                                                 </div>
                                             </div>
+                                        <div class="col-md-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" th:field="*{active}"
                                                        th:checked="*{active}" id="active">
@@ -300,7 +259,6 @@
                                                     Activo
                                                 </label>
                                             </div>
-
                                         </div>
 
                                         <div class="text-center">

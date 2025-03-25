@@ -1,12 +1,21 @@
 package com.flood_web.service.notification;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Call;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Call;
+import com.twilio.type.PhoneNumber;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.connect.ConnectClient;
 import software.amazon.awssdk.services.connect.model.StartOutboundVoiceContactRequest;
 
+
+
 import java.util.Map;
 
+@Slf4j
 @Component
 public class CallStrategy implements NotifyStrategy{
 
@@ -15,16 +24,17 @@ public class CallStrategy implements NotifyStrategy{
 
     @Override
     public void notifyEvent(String destination, String message) {
-
-        StartOutboundVoiceContactRequest callRequest = StartOutboundVoiceContactRequest.builder()
-                .instanceId("012e71cd-70db-42ef-840a-3cdb3665ee3f")
-                .contactFlowId("0825ced0-c31d-4446-8051-73e67fa603bf")
-                .queueId("b63adb25-cf85-4de2-b29a-59836a8d9feb")
-                .destinationPhoneNumber(destination)
-                .attributes(Map.of("callTemplate", message)) // Pass dynamic message
-                .build();
-
-        connectClient.startOutboundVoiceContact(callRequest);
+        try{
+            Call call = Call.creator(
+                    new PhoneNumber(destination),
+                    new PhoneNumber("+13158126244"),
+                    new com.twilio.type.Twiml(message)
+            ).create();
+            log.warn("A notification by call has been done. Call information: Call SID {}, De" +
+                    "stination {}, Message {}", call.getSid(), destination, message);
+        }catch (Exception e) {
+            log.error("An error occurred while trying to notify by call. Destination {}, Message {}", destination, message, e);
+        }
 
     }
 }

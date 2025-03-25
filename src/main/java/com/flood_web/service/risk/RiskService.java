@@ -6,6 +6,7 @@ import com.flood_web.service.crud.FamilyMembersCrudService;
 import com.flood_web.service.crud.SensorCrudService;
 import com.flood_web.service.notification.CallStrategy;
 import com.flood_web.service.notification.SmsStrategy;
+import com.flood_web.service.notification.WppStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,9 @@ public class RiskService {
     @Autowired
     private CallStrategy callStrategy;
 
+    @Autowired
+    private WppStrategy wppStrategy;
+
 
     public void handleRisk(String riverId, int currentLevel){
         Optional<Sensor> sensorOptional = sensorCrudService.findByIdToEvaluate(riverId);
@@ -50,9 +54,10 @@ public class RiskService {
             return;
         }
 
-        handleNotifications(sensor, riskLevelEvaluator.getRiskLevel(currentLevel, sensor.getRiskExpression()));
-
+        handleNotificationsAsync(sensor, riskLevelEvaluator.getRiskLevel(currentLevel, sensor.getRiskExpression()));
     }
+
+
 
     public void handleNotifications(Sensor sensorUnderRisk, RiskLevel riskLevel){
 
@@ -62,17 +67,23 @@ public class RiskService {
                 (personUnderRisk) -> {
                     smsStrategy.notifyEvent(
                             "+57" + personUnderRisk.getTelephone(),
-                            MessageTemplate.TEMPLATE_1
+                            MessageTemplate.TEMPLATE_1_SMS
                                     .replace("[name]", personUnderRisk.getName())
                                     .replace("[risk]", riskLevel.getDescription())
                     );
                     callStrategy.notifyEvent(
                             "+57" + personUnderRisk.getTelephone(),
-                            MessageTemplate.TEMPLATE_1
+                            MessageTemplate.TEMPLATE_1_CALL
                                     .replace("[name]", personUnderRisk.getName())
                                     .replace("[risk]", riskLevel.getDescription())
                     );
                 }
                 );
+    }
+
+    private void handleNotificationsAsync(Sensor sensorUnderRisk, RiskLevel riskLevel){
+        new Thread(() -> {
+            handleNotifications(sensorUnderRisk, riskLevel);
+        }).start();
     }
 }
