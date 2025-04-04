@@ -27,6 +27,7 @@ public class SmsStrategy implements NotifyStrategy{
 
     @Override
     public void notifyEvent(String destination, String message) {
+        Twilio.init("ACee31bdf233c34fae681ba3a65fc3ed1c", "e1397bb390fec76c19e569c07900b717");
         try {
             Message.creator(new com.twilio.type.PhoneNumber(destination), new com.twilio.type.PhoneNumber("+13158126244"), message).create();
             log.warn("A notification by SMS has been done. Destination {}, Message {}", destination, message);

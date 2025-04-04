@@ -247,6 +247,48 @@
                                     Activo
                                 </label>
                             </div>
+                            <!-- Botón para abrir el modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mensajeModal">
+                                Expresión de riesgo
+                            </button>
+
+                            <!-- Modal de Bootstrap -->
+                            <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="mensajeModalLabel">¿Qué es expresión de riesgo?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                La <strong>expresión de riesgo</strong> es la manera de calcular el nivel de daño potencial de un evento adverso, considerando:
+                                            </p>
+
+                                            <p class="text-center">
+                                                <strong>Riesgo = Peligro × Vulnerabilidad × Exposición</strong>
+                                            </p>
+
+                                            <ul>
+                                                <li><strong>Peligro:</strong> Probabilidad de que ocurra un evento (ej. inundación).</li>
+                                                <li><strong>Vulnerabilidad:</strong> Capacidad de resistencia (ej. infraestructura débil).</li>
+                                                <li><strong>Exposición:</strong> Elementos en riesgo (ej. familias en la zona afectada).</li>
+                                            </ul>
+
+                                            <p>
+                                                Se usa para <strong>evaluar y reducir desastres</strong>, facilitando la toma de decisiones preventivas.
+                                            </p>
+
+                                            <p class="fw-bold">
+                                                Recordemos que la expresión de riesgo es suministrada por personal experto, quienes determinan el nivel de riesgo al que se encuentran expuestos ante un desastre, como una inundación.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Registrar o modificar</button>
                                 <button type="reset" class="btn btn-secondary">Limpiar</button>
