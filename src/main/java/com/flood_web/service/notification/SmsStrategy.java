@@ -41,8 +41,8 @@ public class SmsStrategy implements NotifyStrategy{
 
         try {
             Message.creator(
-                new com.twilio.type.PhoneNumber(destination), 
-                new com.twilio.type.PhoneNumber(twilioPhoneNumber), 
+                new com.twilio.type.PhoneNumber(destination),
+                new com.twilio.type.PhoneNumber(twilioPhoneNumber),
                 message
             ).create();
             log.warn("A notification by SMS has been done. Destination {}, Message {}", destination, message);

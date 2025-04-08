@@ -38,7 +38,7 @@ public class CallStrategy implements NotifyStrategy {
                     new PhoneNumber(twilioPhoneNumber),
                     new com.twilio.type.Twiml(message)
             ).create();
-            log.warn("A notification by call has been done. Call information: Call SID {}, Destination {}, Message {}", 
+            log.warn("A notification by call has been done. Call information: Call SID {}, Destination {}, Message {}",
                     call.getSid(), destination, message);
         } catch (Exception e) {
             log.error("An error occurred while trying to notify by call. Destination {}, Message {}", destination, message, e);
