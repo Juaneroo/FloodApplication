@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "alerts")
-public class Alerts {
+public class AlertsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,11 @@ public class Alerts {
 
     private LocalDateTime fecha;
 
-    public Alerts() {
+    public AlertsEntity() {
         this.fecha = LocalDateTime.now(); // fecha automática
     }
 
-    public Alerts(String mensaje) {
+    public AlertsEntity(String mensaje) {
         this.mensaje = mensaje;
         this.fecha = LocalDateTime.now();
     }
