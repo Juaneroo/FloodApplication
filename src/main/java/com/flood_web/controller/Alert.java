@@ -1,6 +1,5 @@
-package com.flood_web.data.entity;
+package com.flood_web.controller;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,12 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
-@Entity
-@Table(name = "alerts")
-public class AlertsEntity {
+public class Alert {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String alertType;

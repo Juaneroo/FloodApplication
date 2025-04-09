@@ -9,7 +9,4 @@ import java.util.List;
 @Repository
 public interface AlertsRepository extends JpaRepository<AlertsEntity, Long> {
 
-    List<AlertsEntity> findTop10ByOrderByFechaDesc();
-
-
 }

@@ -1,8 +1,11 @@
 package com.flood_web.service.risk;
 
+import com.flood_web.controller.Alert;
 import com.flood_web.controller.FamilyMembers;
 import com.flood_web.controller.Sensor;
+import com.flood_web.data.entity.AlertsEntity;
 import com.flood_web.service.cache.UniqueKeyCacheService;
+import com.flood_web.service.crud.AlertCrudService;
 import com.flood_web.service.crud.FamilyMembersCrudService;
 import com.flood_web.service.crud.SensorCrudService;
 import com.flood_web.service.notification.CallStrategy;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,7 +39,7 @@ public class RiskService {
     private CallStrategy callStrategy;
 
     @Autowired
-    private WppStrategy wppStrategy;
+    private AlertCrudService alertCrudService;
 
     @Autowired
     private UniqueKeyCacheService uniqueKeyCacheService;
@@ -85,32 +89,42 @@ public class RiskService {
                 (personUnderRisk) -> {
                     String phoneNumber = "+57" + personUnderRisk.getTelephone();
                     
-                    // Check if we've already sent a notification for this sensor-phone combination
-                    // and if the current risk level is higher than the last notified one
-                    if (!uniqueKeyCacheService.hasNotificationBeenSent(sensorUnderRisk.getId(), phoneNumber, riskLevel)) {
-                        // Send notifications
-                        smsStrategy.notifyEvent(
+                    smsStrategy.notifyEvent(
                                 phoneNumber,
                                 MessageTemplate.TEMPLATE_1_SMS
                                         .replace("[name]", personUnderRisk.getName())
                                         .replace("[risk]", riskLevel.getDescription())
                         );
+
+                        alertCrudService.save(
+                                Alert.builder()
+                                        .withMessage(MessageTemplate.TEMPLATE_1_SMS
+                                                .replace("[name]", personUnderRisk.getName())
+                                                .replace("[risk]", riskLevel.getDescription()))
+                                        .withAlertType("SMS")
+                                        .withNameNotifiedPerson(personUnderRisk.getName())
+                                        .withDate(LocalDateTime.now())
+                                        .build()
+                        );
+
                         callStrategy.notifyEvent(
                                 phoneNumber,
                                 MessageTemplate.TEMPLATE_1_CALL
                                         .replace("[name]", personUnderRisk.getName())
                                         .replace("[risk]", riskLevel.getDescription())
                         );
-                        
-                        // Calculate expiration time based on risk level and mark notification as sent
-                        long expirationHours = NotificationExpiration.getExpirationHours(riskLevel);
-                        uniqueKeyCacheService.markNotificationAsSent(sensorUnderRisk.getId(), phoneNumber, expirationHours, riskLevel);
-                        log.info("Notification sent for sensor {} and phone {} with risk level {} and {} hours expiration", 
-                                sensorUnderRisk.getId(), phoneNumber, riskLevel, expirationHours);
-                    } else {
-                        log.info("Skipping notification for sensor {} and phone {} as it was already sent for a higher or equal risk level", 
-                                sensorUnderRisk.getId(), phoneNumber);
-                    }
+
+                        alertCrudService.save(
+                                Alert.builder()
+                                        .withMessage(MessageTemplate.TEMPLATE_1_SMS
+                                                .replace("[name]", personUnderRisk.getName())
+                                                .replace("[risk]", riskLevel.getDescription()))
+                                        .withAlertType("PHONE")
+                                        .withNameNotifiedPerson(personUnderRisk.getName())
+                                        .withDate(LocalDateTime.now())
+                                        .build()
+                        );
+
                 }
         );
     }
