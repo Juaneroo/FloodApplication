@@ -23,11 +23,18 @@ public class AlertsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String alertType;
 
+    @Column(nullable = false)
     private String message;
 
+    @Column(nullable = false)
     private LocalDateTime date;
 
+    @Column(nullable = false)
     private String nameNotifiedPerson;
+
+    @Column(nullable = false)
+    private String riskLevel;
 }

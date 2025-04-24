@@ -25,4 +25,7 @@ public class Alert {
     private LocalDateTime date;
 
     private String nameNotifiedPerson;
+
+    private String riskLevel;
+
 }

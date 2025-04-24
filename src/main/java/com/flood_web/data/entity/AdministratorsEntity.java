@@ -29,6 +29,12 @@ public class AdministratorsEntity {
     @Column(nullable = false)
     private String entity;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String role;
+
     @Column
     private boolean active;
 

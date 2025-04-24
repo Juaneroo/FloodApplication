@@ -249,7 +249,7 @@
                             </div>
                             <!-- Botón para abrir el modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mensajeModal">
-                                Expresión de riesgo
+                                ¿Qué es expresión de riesgo?
                             </button>
 
                             <!-- Modal de Bootstrap -->
@@ -257,31 +257,44 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="mensajeModalLabel">¿Qué es expresión de riesgo?</h5>
+                                            <h5 class="modal-title" id="mensajeModalLabel">Calcular expresión de riesgo</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="container mt-6">
+                                            <h4 class="mb-3">¿Qué es expresión de riesgo?</h4>
                                             <p>
-                                                La <strong>expresión de riesgo</strong> es la manera de calcular el nivel de daño potencial de un evento adverso, considerando:
+                                                La <strong>expresión de riesgo</strong> es una forma de estimar el nivel de peligro ante un evento adverso, como una inundación. Esta expresión se calcula en niveles del 1 al 10,
+                                                dónde 1 es el mas bajo y 10 el mas alto, a cada nivel se le asigna una profundidad estimada y su unidad de medición será metros(m). Esta evaluación se basa en unos factores clave:
                                             </p>
 
-                                            <p class="text-center">
-                                                <strong>Riesgo = Peligro × Vulnerabilidad × Exposición</strong>
-                                            </p>
+                                            <p class="mb-2"><strong>Fórmula:</strong> <em>Riesgo(X) = Peligro(Y) × Vulnerabilidad Y Exposición(Z)</em></p>
 
                                             <ul>
-                                                <li><strong>Peligro:</strong> Probabilidad de que ocurra un evento (ej. inundación).</li>
-                                                <li><strong>Vulnerabilidad:</strong> Capacidad de resistencia (ej. infraestructura débil).</li>
-                                                <li><strong>Exposición:</strong> Elementos en riesgo (ej. familias en la zona afectada).</li>
+                                                <li><strong>Peligro:</strong> ¿Qué tan probable es que ocurra el evento? (por ejemplo, una inundación frecuente).</li>
+                                                <li><strong>Vulnerabilidad:</strong> ¿Qué tan preparada está la zona para resistir el evento? (por ejemplo, casas frágiles o falta de drenaje).</li>
+                                                <li><strong>Exposición:</strong> ¿Cuántas personas o elementos están en riesgo? (por ejemplo, muchas familias viviendo cerca del río).</li>
                                             </ul>
 
                                             <p>
-                                                Se usa para <strong>evaluar y reducir desastres</strong>, facilitando la toma de decisiones preventivas.
+                                                Teniendo estos factores claros del <strong>nivel de riesgo</strong> cada uno se debe escribir en líneas separadas y se expresa así:
                                             </p>
 
-                                            <p class="fw-bold">
-                                                Recordemos que la expresión de riesgo es suministrada por personal experto, quienes determinan el nivel de riesgo al que se encuentran expuestos ante un desastre, como una inundación.
+                                            <ul>
+                                                <li><strong>X</strong> representa el nivel de riesgo (1-10).</li>
+                                                <li><strong>Y</strong> representa la profundidad que hay en ese nivel de riesgo.</li>
+                                                <li><strong>Z</strong> representa la unidad de medición de la profundidad acuática.</li>
+                                            </ul>
+
+                                            <p>Ejemplo:
+                                            <p>1(X)=12(Y)m(Z)
+                                            <p>2=15m</p>
+                                            <p>3=18m</p>
+                                            <p>Este nivel de riesgo se utiliza para planificar acciones preventivas y proteger a las comunidades expuestas </p>
                                             </p>
+
+                                            <div class="alert alert-info mt-3">
+                                                <strong>Nota:</strong> Esta información es orientativa. El nivel de riesgo debe ser determinado por personal capacitado con conocimiento del área.
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

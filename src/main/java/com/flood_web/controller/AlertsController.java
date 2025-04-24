@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/inside")
@@ -20,6 +23,8 @@ public class AlertsController {
     @GetMapping("/alerts")
     public ModelAndView getAlerts(){
 
+        List<Alert> alerts = alertCrudService.listAll();
+        Collections.reverse(alerts); // invierte la lista
         return new ModelAndView(VIEW_PATH  + "/alerts")
                 .addObject("alerts", alertCrudService.listAll());
 

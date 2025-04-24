@@ -23,6 +23,10 @@ public class Administrators{
 
     private String entity;
 
+    private String password;
+
+    private String role;
+
     private boolean active;
 
 
