@@ -104,6 +104,7 @@ public class RiskService {
                                         .withAlertType("SMS")
                                         .withNameNotifiedPerson(personUnderRisk.getName())
                                         .withDate(LocalDateTime.now())
+                                        .withRiskLevel(riskLevel.getDescription())
                                         .build()
                         );
 
@@ -122,6 +123,7 @@ public class RiskService {
                                         .withAlertType("PHONE")
                                         .withNameNotifiedPerson(personUnderRisk.getName())
                                         .withDate(LocalDateTime.now())
+                                        .withRiskLevel(riskLevel.getDescription())
                                         .build()
                         );
 

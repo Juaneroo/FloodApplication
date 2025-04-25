@@ -253,15 +253,20 @@
               <div class="col-md-12">
                 <div class="form-floating">
                   <input th:field="*{entity}" type="text" class="form-control" id="StringEntity"
-                         placeholder="Entidad" required>
-                  <label for="StringEntity">Entidad</label>
+                         placeholder="Organismo" required>
+                  <label for="StringEntity">Organismo</label>
                 </div>
               </div>
-              <label for="role">Rol:</label>
-              <select class="form-control" id="role" name="role">
-                <option value="ADMIN">Administrador</option>
-                <option value="ENTI">Entidad</option>
-              </select>
+              <div class="col-md-12">
+                <div class="form-floating">
+                  <select th:field="*{role}" class="form-select" id="floatingRole" required>
+                    <option value="" disabled>Selecciona un rol</option>
+                    <option value="ADMIN">Administrador</option>
+                    <option value="ENTI">Entidad</option>
+                  </select>
+                  <label for="floatingRole">Rol</label>
+                </div>
+              </div>
 
               <!-- Checkbox para "Activo" -->
               <div class="col-md-12">
@@ -293,7 +298,8 @@
                 <th>ID</th>
                 <th>Nombres y Apellidos</th>
                 <th>Celular</th>
-                <th>Entidad</th>
+                <th>Organismo</th>
+                <th>Rol</th>
                 <th>Activo</th>
                 <th>Editar</th>
               </tr>
@@ -307,6 +313,7 @@
                 <td><span th:text="${admin.name}">Nombres y Apellidos</span></td>
                 <td><span th:text="${admin.telephone}">Celular</span></td>
                 <td><span th:text="${admin.entity}"> Entidad</span></td>
+                <td><span th:text="${admin.role}"> Rol</span></td>
                 <td><span th:text="${admin.active ? 'Sí' : 'No'}"
                           th:class="${admin.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
                 </td>

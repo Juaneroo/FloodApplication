@@ -26,10 +26,6 @@ public class AlertCrudService implements CrudService<Alert> {
     public void save(Alert obj) {
         AlertsEntity alertsEntity = modelMapper.map(obj, AlertsEntity.class);
 
-        // Convertir la descripción del nivel de riesgo a número antes de guardar
-        int level = convertRiskLevelToNumber(obj.getRiskLevel());
-        alertsEntity.setRiskLevel(String.valueOf(level));
-
         alertsRepository.save(alertsEntity);
     }
 
@@ -38,20 +34,9 @@ public class AlertCrudService implements CrudService<Alert> {
         Iterable<AlertsEntity> entities = alertsRepository.findAll();
 
         return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> {
-                    Alert alert = modelMapper.map(entity, Alert.class);
+                .map(entity -> modelMapper.map(entity, Alert.class)
 
-                    // Convertir número (como String) a descripción
-                    try {
-                        int level = Integer.parseInt(entity.getRiskLevel());
-                        RiskLevel rl = RiskLevel.fromNumber(level);
-                        alert.setRiskLevel(rl != null ? rl.getDescription() : "Desconocido");
-                    } catch (NumberFormatException e) {
-                        alert.setRiskLevel("Desconocido");
-                    }
-
-                    return alert;
-                }).collect(Collectors.toList());
+                ).collect(Collectors.toList());
     }
 
     @Override
@@ -59,14 +44,4 @@ public class AlertCrudService implements CrudService<Alert> {
         return Optional.empty();
     }
 
-    private int convertRiskLevelToNumber(String description) {
-        if (description == null) return 0;
-
-        for (RiskLevel level : RiskLevel.values()) {
-            if (level.getDescription().equalsIgnoreCase(description)) {
-                return level.getLevel();
-            }
-        }
-        return 0;
-    }
 }

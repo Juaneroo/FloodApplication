@@ -4,6 +4,8 @@ package com.flood_web.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,9 +30,6 @@ public class AdministratorsEntity {
 
     @Column(nullable = false)
     private String entity;
-
-    @Column(nullable = false)
-    private String password;
 
     @Column(nullable = false)
     private String role;
