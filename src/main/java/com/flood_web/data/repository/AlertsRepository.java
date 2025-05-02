@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface AlertsRepository extends JpaRepository<AlertsEntity, Long> {
 
-    List<Alert> findAllByOrderByIdDesc();
+    List<AlertsEntity> findAllByOrderByDateDesc();
 
 }

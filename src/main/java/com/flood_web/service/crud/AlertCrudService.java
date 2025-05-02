@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class AlertCrudService implements CrudService<Alert> {
@@ -25,23 +24,20 @@ public class AlertCrudService implements CrudService<Alert> {
     @Override
     public void save(Alert obj) {
         AlertsEntity alertsEntity = modelMapper.map(obj, AlertsEntity.class);
-
         alertsRepository.save(alertsEntity);
     }
 
     @Override
     public List<Alert> listAll() {
-        Iterable<AlertsEntity> entities = alertsRepository.findAll();
+        List<AlertsEntity> entities = alertsRepository.findAllByOrderByDateDesc(); //
 
-        return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> modelMapper.map(entity, Alert.class)
-
-                ).collect(Collectors.toList());
+        return entities.stream()
+                .map(entity -> modelMapper.map(entity, Alert.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Alert> findById(String id) {
         return Optional.empty();
     }
-
 }

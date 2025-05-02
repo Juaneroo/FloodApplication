@@ -20,9 +20,9 @@ public class SecurityConfig {
     // Define el filtro de seguridad principal (reemplaza WebSecurityConfigurerAdapter)
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.csrf(csrf -> csrf.disable()) // <-- desactiva CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/outside/login", "/assets/**").permitAll()
+                        .requestMatchers("/register","/api/risk/level/**", "/outside/login", "/assets/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

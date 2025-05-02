@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service ("personRiskLogCrudService")
+@Service ("PersonRiskLogCrudService")
 public class PersonRiskLogCrudService implements CrudService<PersonRiskLog>{
 
     @Autowired
@@ -29,9 +29,9 @@ public class PersonRiskLogCrudService implements CrudService<PersonRiskLog>{
 
     @Override
     public void save(PersonRiskLog personRiskLog) {
-        PersonRiskLogEntity familyMemberEntity = modelMapper.map(personRiskLog, PersonRiskLogEntity.class);
-        familyMemberEntity.setDate(LocalDateTime.now());
-        personRiskLogRepository.save(familyMemberEntity);
+        PersonRiskLogEntity personRiskLogEntity = modelMapper.map(personRiskLog, PersonRiskLogEntity.class);
+        personRiskLogEntity.setDate(LocalDateTime.now());
+        personRiskLogRepository.save(personRiskLogEntity);
     }
 
     @Override
