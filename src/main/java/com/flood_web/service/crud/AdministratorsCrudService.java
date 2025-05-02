@@ -3,8 +3,10 @@ package com.flood_web.service.crud;
 import com.flood_web.controller.Administrators;
 import com.flood_web.data.entity.AdministratorsEntity;
 import com.flood_web.data.repository.AdministratorsRepository;
+import com.flood_web.security.SecurityUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,9 @@ public class AdministratorsCrudService implements CrudService<Administrators> {
 
     @Autowired
     AdministratorsRepository administratorsRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     ModelMapper modelMapper;
@@ -48,6 +53,21 @@ public class AdministratorsCrudService implements CrudService<Administrators> {
     @Override
     public void save(Administrators administrators) {
         AdministratorsEntity administratorsEntity = modelMapper.map(administrators, AdministratorsEntity.class);
+        administratorsEntity.setPassword(passwordEncoder.encode(administrators.getPassword()));
         administratorsRepository.save(administratorsEntity);
     }
+
+    public Optional<Administrators> getByCedula(String cedula) {
+        Optional<AdministratorsEntity> foundAdministrators = this.administratorsRepository.findByCedula(cedula);
+
+        if (foundAdministrators.isEmpty()) {
+            return Optional.empty();
+        }
+
+        AdministratorsEntity administratorsEntity = foundAdministrators.get();
+        Administrators administrators = modelMapper.map(administratorsEntity, Administrators.class);
+
+        return Optional.ofNullable(administrators);
+    }
+
 }

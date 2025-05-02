@@ -65,4 +65,12 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
                 .collect(Collectors.toSet());
 
     }
+
+    public String findAssociatedZoneName(String familyMemberId) {
+        FamilyMemberEntity familyMemberEntity = familyMembersRepository.findById(familyMemberId).orElse(null);
+        if (familyMemberEntity == null) {
+            return "Zona no encontrada"; // Zone not found
+        }
+        return familyMemberEntity.getFamily().getZone().getName();
+    }
 }

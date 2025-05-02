@@ -1,6 +1,8 @@
 spring:
   application:
     name: flood-web
+  main:
+    allow-circular-references: true
 
   datasource:
     url: jdbc:mysql://flood-db.c9c2a686ayrx.us-east-1.rds.amazonaws.com:3306/flood_db

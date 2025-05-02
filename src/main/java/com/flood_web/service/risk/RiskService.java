@@ -2,12 +2,15 @@ package com.flood_web.service.risk;
 
 import com.flood_web.controller.Alert;
 import com.flood_web.controller.FamilyMembers;
+import com.flood_web.controller.PersonRiskLog;
 import com.flood_web.controller.Sensor;
 import com.flood_web.data.entity.AlertsEntity;
 import com.flood_web.service.cache.UniqueKeyCacheService;
 import com.flood_web.service.crud.AlertCrudService;
 import com.flood_web.service.crud.FamilyMembersCrudService;
+import com.flood_web.service.crud.PersonRiskLogCrudService;
 import com.flood_web.service.crud.SensorCrudService;
+import com.flood_web.service.crud.ZoneCrudService;
 import com.flood_web.service.notification.CallStrategy;
 import com.flood_web.service.notification.SmsStrategy;
 import com.flood_web.service.notification.WppStrategy;
@@ -42,7 +45,14 @@ public class RiskService {
     private AlertCrudService alertCrudService;
 
     @Autowired
+    private PersonRiskLogCrudService personRiskLogCrudService;
+
+    @Autowired
     private UniqueKeyCacheService uniqueKeyCacheService;
+
+    @Autowired
+    private ZoneCrudService zoneCrudService;
+
 
     /**
      * Gets the expiration time in hours based on the risk level.
@@ -95,19 +105,6 @@ public class RiskService {
                                         .replace("[name]", personUnderRisk.getName())
                                         .replace("[risk]", riskLevel.getDescription())
                         );
-
-                        alertCrudService.save(
-                                Alert.builder()
-                                        .withMessage(MessageTemplate.TEMPLATE_1_SMS
-                                                .replace("[name]", personUnderRisk.getName())
-                                                .replace("[risk]", riskLevel.getDescription()))
-                                        .withAlertType("SMS")
-                                        .withNameNotifiedPerson(personUnderRisk.getName())
-                                        .withDate(LocalDateTime.now())
-                                        .withRiskLevel(riskLevel.getDescription())
-                                        .build()
-                        );
-
                         callStrategy.notifyEvent(
                                 phoneNumber,
                                 MessageTemplate.TEMPLATE_1_CALL
@@ -115,18 +112,7 @@ public class RiskService {
                                         .replace("[risk]", riskLevel.getDescription())
                         );
 
-                        alertCrudService.save(
-                                Alert.builder()
-                                        .withMessage(MessageTemplate.TEMPLATE_1_SMS
-                                                .replace("[name]", personUnderRisk.getName())
-                                                .replace("[risk]", riskLevel.getDescription()))
-                                        .withAlertType("PHONE")
-                                        .withNameNotifiedPerson(personUnderRisk.getName())
-                                        .withDate(LocalDateTime.now())
-                                        .withRiskLevel(riskLevel.getDescription())
-                                        .build()
-                        );
-
+                    populateLog(personUnderRisk, riskLevel);
                 }
         );
     }
@@ -135,5 +121,29 @@ public class RiskService {
         new Thread(() -> {
             handleNotifications(sensorUnderRisk, riskLevel);
         }).start();
+    }
+
+    private void populateLog(FamilyMembers personUnderRisk, RiskLevel riskLevel) {
+        alertCrudService.save(
+                Alert.builder()
+                        .withMessage(MessageTemplate.TEMPLATE_1_SMS
+                                .replace("[name]", personUnderRisk.getName())
+                                .replace("[risk]", riskLevel.getDescription()))
+                        .withAlertType("PHONE and SMS")
+                        .withNameNotifiedPerson(personUnderRisk.getName())
+                        .withDate(LocalDateTime.now())
+                        .withRiskLevel(riskLevel.getDescription())
+                        .build()
+        );
+
+        String zoneName = familyMembersCrudService.findAssociatedZoneName(personUnderRisk.getId());
+        personRiskLogCrudService.save(
+                PersonRiskLog.builder()
+                        .withPersonName(personUnderRisk.getName())
+                        .withPhoneNumber(personUnderRisk.getTelephone())
+                        .withRiskLevel(riskLevel.getDescription())
+                        .withZoneName(zoneName)
+                        .build()
+        );
     }
 }

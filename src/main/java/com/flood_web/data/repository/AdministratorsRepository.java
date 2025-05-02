@@ -7,8 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AdministratorsRepository extends CrudRepository<AdministratorsEntity, String> {
+
+    //create a query funtion that return a administrator by its cedula and if active is true
+    @Query("SELECT a FROM AdministratorsEntity a WHERE a.cedula = :cedula AND a.active = true")
+    Optional<AdministratorsEntity> findByCedula(@Param("cedula") String cedula);
+
 
 }
