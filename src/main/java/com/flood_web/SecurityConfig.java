@@ -2,12 +2,14 @@ package com.flood_web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -27,7 +29,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/outside/login")
-                        .defaultSuccessUrl("/inside/sensor", true)
+                        .defaultSuccessUrl("/inside/home", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -36,6 +38,9 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/inside/403")
                 );
 
         return http.build();

@@ -4,11 +4,13 @@ import com.flood_web.service.crud.CrudService;
 import com.flood_web.service.risk.RiskLevelEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@PreAuthorize("hasRole('ADMIN')")
 @Controller
 @RequestMapping("/inside")
 public class SensorController {

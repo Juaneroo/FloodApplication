@@ -2,11 +2,13 @@ package com.flood_web.controller;
 
 import com.flood_web.service.crud.AdministratorsCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@PreAuthorize("hasRole('ADMIN')")
 @Controller
 @RequestMapping("/inside")
 public class AdministratorsController {
@@ -54,6 +56,4 @@ public class AdministratorsController {
 
         return "redirect:/inside/administrators";
     }
-
-
 }
