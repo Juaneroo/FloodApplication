@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bienvenido</title>
+  <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4; /* Un color de fondo suave */
+        }
+
+        .welcome-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px; /* Bordes redondeados para la imagen */
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="welcome-container">
+  <h1>¡Bienvenido a mi sitio!</h1>
+  <img th:src="@{/img/Ayapel.jpg}" alt="Imagen de Bienvenida" class="welcome-image"/>
+  <p>Este es el index de tu aplicación Spring Boot con Thymeleaf.</p>
+</div>
+</body>
+</html>

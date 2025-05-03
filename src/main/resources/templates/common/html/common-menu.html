@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
 </head>
@@ -22,50 +23,55 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Gestión</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+
+          <!-- Visible solo para ADMIN -->
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/sensor}">
               <i class="bi bi-circle"></i><span>Sensores</span>
             </a>
           </li>
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/river}">
-              <i class="bi bi-circle"></i><span>Rios</span>
+              <i class="bi bi-circle"></i><span>Ríos</span>
             </a>
           </li>
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/zone}">
               <i class="bi bi-circle"></i><span>Zonas</span>
             </a>
           </li>
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/family}">
               <i class="bi bi-circle"></i><span>Familias</span>
             </a>
           </li>
-
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/familyMembers}">
               <i class="bi bi-circle"></i><span>Miembros de familia</span>
             </a>
           </li>
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/alerts}">
               <i class="bi bi-circle"></i><span>Alertas</span>
             </a>
           </li>
-          <li>
+          <li sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/inside/administrators}">
               <i class="bi bi-circle"></i><span>Admin</span>
             </a>
           </li>
-          <li>
+
+          <!-- Visible para ADMIN y SOCORRO -->
+          <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SOCORRO')">
             <a th:href="@{/inside/personRiskLog}">
               <i class="bi bi-circle"></i><span>Personas en riesgo</span>
             </a>
           </li>
-        </ul><!-- End Contact Page Nav -->
-      </li><!-- End Components Nav -->
+
+        </ul>
+      </li>
+
     </ul>
   </aside>
 </div>
