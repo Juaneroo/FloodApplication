@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service("sensorCrudService")
+@Service
 public class SensorCrudService implements CrudService<Sensor>{
 
     @Autowired

@@ -39,7 +39,7 @@ $(document).ready(function() {
 			cache : false,
 			beforeSend : function(xhr) {
 				// $('#default-modal').modal('hide');
-				loadingMask("Actulizando...");
+				loadingMask("Actualizando...");
 			},
 			success : function(result) {
 

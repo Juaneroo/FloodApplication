@@ -6,76 +6,96 @@
 </head>
 <body>
 
-<!-- Crete an aside menu for thymeleaf. It must be a reusable fragment. -->
 <div th:fragment="common-menu">
-  <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+        <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="home">
+                    <i class="bi bi-grid"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link collapsed" data-bs-target="#riesgo-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Gestión de riesgo</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="riesgo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/inside/sensor}">
+                            <i class="bi bi-circle"></i><span>Sensores</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/inside/river}">
+                            <i class="bi bi-circle"></i><span>Ríos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/inside/zone}">
+                            <i class="bi bi-circle"></i><span>Zonas</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Gestión</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link collapsed" data-bs-target="#familias-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people"></i><span>Gestión de familias</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="familias-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/inside/family}">
+                            <i class="bi bi-circle"></i><span>Familias</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/inside/familyMembers}">
+                            <i class="bi bi-circle"></i><span>Miembros de familia</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-          <!-- Visible solo para ADMIN -->
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/sensor}">
-              <i class="bi bi-circle"></i><span>Sensores</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/river}">
-              <i class="bi bi-circle"></i><span>Ríos</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/zone}">
-              <i class="bi bi-circle"></i><span>Zonas</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/family}">
-              <i class="bi bi-circle"></i><span>Familias</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/familyMembers}">
-              <i class="bi bi-circle"></i><span>Miembros de familia</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/alerts}">
-              <i class="bi bi-circle"></i><span>Alertas</span>
-            </a>
-          </li>
-          <li sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/inside/administrators}">
-              <i class="bi bi-circle"></i><span>Admin</span>
-            </a>
-          </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#notificaciones-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-bell"></i><span>Gestión de notificaciones</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="notificaciones-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/inside/alerts}">
+                            <i class="bi bi-circle"></i><span>Notificaciones</span>
+                        </a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SOCORRO')">
+                        <a th:href="@{/inside/personRiskLog}">
+                            <i class="bi bi-circle"></i><span>Lista de personas en riesgo</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-          <!-- Visible para ADMIN y SOCORRO -->
-          <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SOCORRO')">
-            <a th:href="@{/inside/personRiskLog}">
-              <i class="bi bi-circle"></i><span>Personas en riesgo</span>
-            </a>
-          </li>
-
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link collapsed" data-bs-target="#usuarios-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Gestión de usuarios</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="usuarios-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/inside/administrators}">
+                            <i class="bi bi-circle"></i><span>Usuarios</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
-      </li>
 
-    </ul>
-  </aside>
+    </aside>
 </div>
-
 
 </body>
 </html>

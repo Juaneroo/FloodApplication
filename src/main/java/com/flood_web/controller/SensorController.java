@@ -1,6 +1,7 @@
 package com.flood_web.controller;
 
 import com.flood_web.service.crud.CrudService;
+import com.flood_web.service.crud.SensorCrudService;
 import com.flood_web.service.risk.RiskLevelEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@PreAuthorize("hasRole('ADMIN')")
+
 @Controller
 @RequestMapping("/inside")
 public class SensorController {
 
     @Autowired
-    @Qualifier("sensorCrudService")
-    private CrudService<Sensor> sensorCrudService;
+    private SensorCrudService sensorCrudService;
 
     @Autowired
     private RiskLevelEvaluator riskLevelEvaluator;

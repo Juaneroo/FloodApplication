@@ -189,14 +189,14 @@
   </section>
 </main>
 
-<div th:if="${showFamilyMembersSavedOk}"
+<div th:if="${showAdministratorsSavedOk}"
      class="col-md-12 offset-md-3 alert alert-success alert-dismissible fade show" role="alert">
   <i class="bi bi-check-circle me-1"></i>
   ¡El miembro de administración ha sido registrada o modificada con éxito!
   <button type="button" class="btn-close" data-bs-dismiss="alert"
           aria-label="Close"></button>
 </div>
-<div th:if="${showFamilyMembersSavedError}"
+<div th:if="${showAdministratorsSavedError}"
      class="col-md-12 offset-md-3 alert alert-danger alert-dismissible fade show ms-auto" role="alert">
   <i class="bi bi-exclamation-octagon me-1"></i>
   ¡No se ha podido registrar o modificar el miembro de administración!

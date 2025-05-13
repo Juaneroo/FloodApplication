@@ -52,12 +52,10 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Profile</h1>
+        <h1>Inicio</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Users</li>
-                <li class="breadcrumb-item active">Profile</li>
+                <li class="breadcrumb-item"><a href="home">Home</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -71,36 +69,21 @@
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
 
-                            <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                            </li>
 
                         </ul>
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <h1>Bienvenido</h1>
-                                <h5 class="card-title">Detalles del perfil</h5>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Nombre completo</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.name}">name</div>
-                                </div>
+                                <h1>¡<strong>Bienvenido al sensor de alerta temprana!</strong> </h1>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Cedula y/ó usuario</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.cedula}">cedula</div>
-                                </div>
+                                <p class="lead">
+                                    Este innovador sensor de alerta temprana está diseñado para proteger a la comunidad del municipio de Ayapel, Córdoba, ante el riesgo de inundaciones. Nuestro sistema inteligente monitorea constantemente los niveles de agua y, en caso de detectar una amenaza inminente, notifica de manera oportuna a los residentes a través de mensajes de texto (SMS) y llamadas telefónicas directas.
+                                    Trabajamos en estrecha colaboración con los organismos de socorro del municipio de Ayapel para lograr una excelente gestión del riesgo de inundaciones y una prevención efectiva de desastres. Esta coordinación nos permite optimizar la respuesta y brindar una mayor seguridad a la comunidad.
+                                </p>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Rol</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.roleName}">role</div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Telefono</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.phone}">phone</div>
-                                </div>
+
 
                             </div>
 
