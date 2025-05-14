@@ -17,4 +17,7 @@ public interface AdministratorsRepository extends CrudRepository<AdministratorsE
     Optional<AdministratorsEntity> findByCedula(@Param("cedula") String cedula);
 
 
+    //create a query funtion that return that update the password of an administrator by its cedula
+    @Query("UPDATE AdministratorsEntity a SET a.password = :password WHERE a.cedula = :cedula")
+    void updatePassword(@Param("cedula") String cedula, @Param("password") String password);
 }

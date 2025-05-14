@@ -95,41 +95,26 @@
                 <h5 class="card-title">¡Gracias!</h5>
                 <p class="small fst-italic">¡Bienvenido! Has accedido al Sistema de Alerta Temprana para Inundaciones. Recuerda que la información oportuna es clave para la seguridad. Mantente alerta a las notificaciones y utiliza esta herramienta de manera responsable.</p>
 
-                <h5 class="card-title">Profile Details</h5>
+                <h5 class="card-title">Detalles del perfil</h5>
 
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                  <div class="col-lg-3 col-md-4 label ">Nombre completo</div>
+                  <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.name}">name</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Company</div>
-                  <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                  <div class="col-lg-3 col-md-4 label">Cedula y/ó usuario</div>
+                  <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.cedula}">cedula</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Job</div>
-                  <div class="col-lg-9 col-md-8">Web Designer</div>
+                  <div class="col-lg-3 col-md-4 label">Rol</div>
+                  <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.roleName}">role</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Country</div>
-                  <div class="col-lg-9 col-md-8">USA</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Address</div>
-                  <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Phone</div>
-                  <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                  <div class="col-lg-3 col-md-4 label">Telefono</div>
+                  <div class="col-lg-9 col-md-8" th:text="${#authentication.principal.phone}">phone</div>
                 </div>
 
               </div>
@@ -284,27 +269,38 @@
 
               <div class="tab-pane fade pt-3" id="profile-change-password">
                 <!-- Change Password Form -->
-                <form>
+                <form id="chagePwd" action="#" th:action="@{/inside/profile/password}" method="post" th:object="${changePasswordRequest}"
+                      class="row g-3">
 
-                  <div class="row mb-3">
-                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="password" type="password" class="form-control" id="currentPassword">
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input th:field="*{oldPassword}" type="password" class="form-control"
+                             id="floatingName" required
+                             placeholder="Contraseña actual">
+                      <label for="floatingName">Contraseña actual</label>
                     </div>
                   </div>
 
-                  <div class="row mb-3">
-                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="newpassword" type="password" class="form-control" id="newPassword">
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input th:field="*{newPassword}" type="password" class="form-control"
+                             id="newPdw" pattern="^(?=\S{6,16}$)[a-zA-Z0-9]+$" required
+                             placeholder="Nueva contraseña" title="Debe ser entre 6 a 16 digitos sin espacios">
+                      <label for="newPdw">Nueva contraseña</label>
                     </div>
                   </div>
 
-                  <div class="row mb-3">
-                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="password" class="form-control"
+                             id="newRPdw" pattern="^(?=\S{6,16}$)[a-zA-Z0-9]+$" required
+                             placeholder="Repita Nueva contraseña" title="Debe ser entre 6 a 16 digitos sin espacios">
+                      <label for="newRPdw">repita Nueva contraseña</label>
                     </div>
+                  </div>
+
+                  <div id="passwordMismatchAlert" class="alert alert-danger alert-dismissible fade show d-none">
+                    Las contraseñas no coinciden.
                   </div>
 
                   <div class="text-center">
@@ -317,6 +313,16 @@
             </div><!-- End Bordered Tabs -->
 
           </div>
+        </div>
+        <div th:if="${pwdChanged}" class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+          <i class="bi bi-check-circle me-1"></i>
+          ¡La contraseña ha sido modificada con éxito!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${pwdNotChanged}" class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="bi bi-exclamation-octagon me-1"></i>
+          ¡La contraseña  no se ha podido modificar!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
       </div>
@@ -353,6 +359,21 @@
 
 <!-- Template Main JS File -->
 <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
+<script th:inline="javascript">
+document.getElementById("chagePwd").addEventListener("submit", function(event) {
+    const newPassword = document.getElementById("newPdw").value;
+    const confirmPassword = document.getElementById("newRPdw").value;
+    const alertDiv = document.getElementById("passwordMismatchAlert");
+
+    // Verifica si las contraseñas no coinciden
+    if (newPassword !== confirmPassword) {
+        event.preventDefault(); // Evita que se envíe el formulario
+        alertDiv.classList.remove("d-none"); // Muestra el mensaje de error
+    } else {
+        alertDiv.classList.add("d-none"); // Si coinciden, asegura que el mensaje está oculto
+    }
+});
+</script>
 
 
 </html>

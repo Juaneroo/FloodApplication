@@ -18,13 +18,13 @@ import java.util.stream.StreamSupport;
 public class AdministratorsCrudService implements CrudService<Administrators> {
 
     @Autowired
-    AdministratorsRepository administratorsRepository;
+    private AdministratorsRepository administratorsRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Override
     public Optional<Administrators> findById(String idNumber) {
