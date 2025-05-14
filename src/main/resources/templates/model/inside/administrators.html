@@ -11,16 +11,13 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons -->
   <link th:href="@{assets/img/favicon.png}" rel="icon">
   <link th:href="@{assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:30F0,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
   <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
   <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
@@ -29,177 +26,162 @@
   <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet">
   <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
   <link th:href="@{/assets/css/style.css}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
 
-<!-- ======= Header ======= -->
 <div th:insert="~{common/html/common-head-info :: common-head-info}"></div>
-<!-- End Header -->
-
-<!-- ======= Sidebar ======= -->
 <div th:insert="~{common/html/common-menu :: common-menu}"></div>
-<!-- End Sidebar-->
-
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Registrar administradores del aplicativo</h1>
+    <h1>Registrar administradores/socorristas del aplicativo</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active">Miembros de la administración</li>
+        <li class="breadcrumb-item active">Miembros de la administración/socorristas</li>
       </ol>
     </nav>
-  </div><!-- End Page Title -->
+  </div><section class="section">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Formulario de registro</h5>
 
-  <section class="section">
-    <div class="row">
-      <!-- Columna para el formulario -->
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Formulario de registro</h5>
-
-            <form action="#" th:action="@{/inside/administrators}" method="post" th:object="${administratorForm}" class="row g-3">
-              <!-- Campo para la cédula -->
-              <div class="col-md-12">
-                <input th:field="*{id}" type="hidden">
-                <div class="form-floating">
-                  <input th:field="*{cedula}" type="text" class="form-control" id="floatingIdNumber"
-                         pattern="^\d{6,10}$" title="Debe contener entre 6 y 10 dígitos numéricos"
-                         required placeholder="Cédula">
-                  <label for="floatingIdNumber">Cédula</label>
-                </div>
-              </div>
-
-              <!-- Campo para nombres y apellidos -->
-              <div class="col-md-12">
-                <div class="form-floating">
-                  <input th:field="*{name}" type="text" class="form-control" id="floatingName"
-                         pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
-                         placeholder="Nombre y Apellido" required>
-                  <label for="floatingName">Primer nombre y apellido</label>
-                </div>
-              </div>
-
-              <!-- Campo para teléfono -->
-              <div class="col-md-12">
-                <div class="form-floating">
-                  <input th:field="*{telephone}" type="text" class="form-control" id="floatingTelephone" pattern="^\d{10}$"
-                         title="Debe contener exactamente 10 números" placeholder="Teléfono" required>
-                  <label for="floatingTelephone">Teléfono</label>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-floating">
-                  <input th:field="*{entity}" type="text" class="form-control" id="StringEntity"
-                         placeholder="Organismo" required>
-                  <label for="StringEntity">Organismo</label>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-floating">
-                  <select th:field="*{role}" class="form-select" id="floatingRole" required>
-                    <option value="" disabled>Selecciona un rol</option>
-                    <option value="ADMIN">Administrador</option>
-                    <option value="SOCORRO">Entidad</option>
-                  </select>
-                  <label for="floatingRole">Rol</label>
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <div class="form-floating">
-                  <input th:field="*{password}" type="password" class="form-control" id="floatingPwd"
-                         pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
-                         placeholder="Password" required>
-                  <label for="floatingName">Password</label>
-                </div>
-              </div>
-
-              <!-- Checkbox para "Activo" -->
-              <div class="col-md-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" th:field="*{active}" th:checked="*{active}" id="active">
-                  <label class="form-check-label" for="active">Activo</label>
-                </div>
-              </div>
-
-              <!-- Botones -->
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Registrar o Modificar</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
-              </div>
-            </form>
+          <div th:if="${showAdministratorsSavedError}"
+               class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-octagon me-1"></i>
+            <span th:text="${errorMessage}">¡No se ha podido registrar o modificar el miembro de administración/socorro!</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
           </div>
-        </div>
-      </div>
 
-      <!-- Columna para la tabla -->
-      <div class="col-lg-8">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Miembros registrados</h5>
+          <form action="#" th:action="@{/inside/administrators}" method="post" th:object="${administratorForm}" class="row g-3">
+            <div class="col-md-12">
+              <input th:field="*{id}" type="hidden">
+              <div class="form-floating">
+                <input th:field="*{cedula}" type="text" class="form-control" id="floatingIdNumber"
+                       pattern="^\d{6,10}$" title="Debe contener entre 6 y 10 dígitos numéricos"
+                       required placeholder="Cédula">
+                <label for="floatingIdNumber">Cédula</label>
+              </div>
+            </div>
 
-            <table class="table datatable">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombres y Apellidos</th>
-                <th>Celular</th>
-                <th>Organismo</th>
-                <th>Rol</th>
-                <th>Activo</th>
-                <th>Editar</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:if="${#lists.isEmpty(administrators)}">
-                <td colspan="6">No hay miembros de administración</td>
-              </tr>
-              <tr th:each="admin : ${administrators}">
-                <td><span th:text="${admin.id}">Cédula</span></td>
-                <td><span th:text="${admin.name}">Nombres y Apellidos</span></td>
-                <td><span th:text="${admin.telephone}">Celular</span></td>
-                <td><span th:text="${admin.entity}"> Entidad</span></td>
-                <td><span th:text="${admin.role}"> Rol</span></td>
-                <td><span th:text="${admin.active ? 'Sí' : 'No'}"
-                          th:class="${admin.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
-                </td>
-                <td>
-                  <a th:href="@{/inside/administrators/{idNumber}(idNumber=${admin.id})}">Editar</a>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input th:field="*{name}" type="text" class="form-control" id="floatingName"
+                       pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
+                       placeholder="Nombre y Apellido" required>
+                <label for="floatingName">Primer nombre y apellido</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input th:field="*{telephone}" type="text" class="form-control" id="floatingTelephone" pattern="^\d{10}$"
+                       title="Debe contener exactamente 10 números" placeholder="Teléfono" required>
+                <label for="floatingTelephone">Teléfono</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input th:field="*{entity}" type="text" class="form-control" id="StringEntity"
+                       placeholder="Organismo" required>
+                <label for="StringEntity">Organismo</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-floating">
+                <select th:field="*{role}" class="form-select" id="floatingRole" required>
+                  <option value="" disabled>Selecciona un rol</option>
+                  <option value="ADMIN">Administrador</option>
+                  <option value="SOCORRO">Entidad</option>
+                </select>
+                <label for="floatingRole">Rol</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input th:field="*{password}" type="password" class="form-control" id="floatingPwd"
+                       pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
+                       placeholder="Password" required>
+                <label for="floatingName">Password</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" th:field="*{active}" th:checked="*{active}" id="active">
+                <label class="form-check-label" for="active">Activo</label>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Registrar o Modificar</button>
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Miembros registrados</h5>
+
+          <table class="table datatable">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombres y Apellidos</th>
+              <th>Celular</th>
+              <th>Organismo</th>
+              <th>Rol</th>
+              <th>Activo</th>
+              <th>Editar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(administrators)}">
+              <td colspan="6">No hay miembros de administración</td>
+            </tr>
+            <tr th:each="admin : ${administrators}">
+              <td><span th:text="${admin.id}">Cédula</span></td>
+              <td><span th:text="${admin.name}">Nombres y Apellidos</span></td>
+              <td><span th:text="${admin.telephone}">Celular</span></td>
+              <td><span th:text="${admin.entity}"> Entidad</span></td>
+              <td><span th:text="${admin.role}"> Rol</span></td>
+              <td><span th:text="${admin.active ? 'Sí' : 'No'}"
+                        th:class="${admin.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
+              </td>
+              <td>
+                <a th:href="@{/inside/administrators/{idNumber}(idNumber=${admin.id})}">Editar</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <div th:if="${showAdministratorsSavedOk}"
      class="col-md-12 offset-md-3 alert alert-success alert-dismissible fade show" role="alert">
   <i class="bi bi-check-circle me-1"></i>
-  ¡El miembro de administración ha sido registrada o modificada con éxito!
+  ¡El miembro de administración/socorrista ha sido registrada o modificada con éxito!
   <button type="button" class="btn-close" data-bs-dismiss="alert"
           aria-label="Close"></button>
 </div>
 <div th:if="${showAdministratorsSavedError}"
-     class="col-md-12 offset-md-3 alert alert-danger alert-dismissible fade show ms-auto" role="alert">
+     class="col-md-12 offset-md-3 alert alert-danger alert-dismissible fade show" role="alert">
   <i class="bi bi-exclamation-octagon me-1"></i>
-  ¡No se ha podido registrar o modificar el miembro de administración!
+  >¡No se ha podido registrar o modificar el miembro de administración/socorrista!
   <button type="button" class="btn-close" data-bs-dismiss="alert"
           aria-label="Close"></button>
 </div>
@@ -207,24 +189,16 @@
 </div>
 
 
-<!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
   <div class="copyright">
     &copy; Copyright <strong><span>SensorSAT</span></strong>. All Rights Reserved
   </div>
   <div class="credits">
-    <!-- All the links in the footer should remain intact. -->
-    <!-- You can delete the links only if you purchased the pro version. -->
-    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
     Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
   </div>
-</footer><!-- End Footer -->
-
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+</footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
 <script type="text/javascript" th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/vendor/chart.js/chart.umd.js}"></script>
 <script type="text/javascript" th:src="@{/assets/vendor/echarts/echarts.min.js}"></script>
@@ -234,8 +208,8 @@
 <script type="text/javascript" th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
 <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}" type="text/javascript"></script>
 
-<!-- Template Main JS File -->
 <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
 
 </body>
 
+</html>

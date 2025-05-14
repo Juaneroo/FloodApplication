@@ -22,10 +22,13 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     @Autowired
     ModelMapper modelMapper;
 
+    // Método para verificar la existencia por cedula
+    public boolean existsByCedula(String cedula) {
+        return familyMembersRepository.existsByCedula(cedula);
+    }
 
     @Override
     public void save(FamilyMembers familyMembers) {
-
         FamilyMemberEntity familyMemberEntity = modelMapper.map(familyMembers, FamilyMemberEntity.class);
         familyMembersRepository.save(familyMemberEntity);
     }
@@ -33,37 +36,30 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     @Override
     public List<FamilyMembers> listAll() {
         Iterable<FamilyMemberEntity> entities = familyMembersRepository.findAll();
-
         return StreamSupport.stream(entities.spliterator(), false)
-                .map(entity -> modelMapper.map(entity, FamilyMembers.class)
-                )
+                .map(entity -> modelMapper.map(entity, FamilyMembers.class))
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public Optional<FamilyMembers> findById(String idNumber) {
-
-        Optional<FamilyMemberEntity> foundFamilyMembers = this.familyMembersRepository.findById(idNumber);
+        // Este método sigue buscando por la clave primaria (que ahora es Long)
+        // Si necesitas buscar por cedula para otras funcionalidades, usa findByCedula
+        Optional<FamilyMemberEntity> foundFamilyMembers = familyMembersRepository.findById(idNumber);
         if (foundFamilyMembers.isEmpty()){
             return Optional.of(FamilyMembers.builder().build());
         }
-
         FamilyMemberEntity familyMemberEntity = foundFamilyMembers.get();
         FamilyMembers familyMembers = modelMapper.map(familyMemberEntity, FamilyMembers.class);
-
         return Optional.of(familyMembers);
     }
 
     public Set<FamilyMembers> findPeopleUnderRisk(String sensorUnderRisk){
-
         List<FamilyMemberEntity> peopleUnderRisk = familyMembersRepository.findBySensorId(sensorUnderRisk);
-
         return peopleUnderRisk
                 .stream()
                 .map(member -> modelMapper.map(member, FamilyMembers.class))
                 .collect(Collectors.toSet());
-
     }
 
     public String findAssociatedZoneName(String familyMemberId) {

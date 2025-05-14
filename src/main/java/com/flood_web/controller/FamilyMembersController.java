@@ -24,44 +24,37 @@ public class FamilyMembersController {
 
     @GetMapping("/familyMembers")
     public ModelAndView getFamilyMembers(){
-
         return new ModelAndView(VIEW_PATH  + "/familyMembers")
                 .addObject("familyMember", FamilyMembers.builder().build())
                 .addObject("familyMembers", familyMembersCrudService.listAll())
                 .addObject("families", familyCrudService.listAll());
-
     }
 
     @GetMapping("/familyMembers/{id}")
     public ModelAndView getFamilyMembersByIdNumber(@PathVariable String id){
-
         return new ModelAndView(VIEW_PATH  + "/familyMembers")
-                .addObject("familyMember", familyMembersCrudService.findById(id).get())
+                .addObject("familyMember", familyMembersCrudService.findById(id).orElse(FamilyMembers.builder().build()))
                 .addObject("familyMembers", familyMembersCrudService.listAll())
                 .addObject("families", familyCrudService.listAll());
-
     }
 
-
-
     @PostMapping("/familyMembers")
-    public String saveFamilyMembers(@ModelAttribute("familyMembers") FamilyMembers familyMembers, RedirectAttributes redirectAttributes) {
+    public String saveFamilyMembers(@ModelAttribute("familyMember") FamilyMembers familyMember, RedirectAttributes redirectAttributes) {
 
-        boolean showFamilyMembersSavedOk = true;
-        boolean showFamilyMembersSavedError = false;
-        try{
-            familyMembersCrudService.save(familyMembers);
-        }catch (Exception ex){
-            showFamilyMembersSavedOk = false;
-            showFamilyMembersSavedError = true;
+        // Asumo que el campo en tu DTO FamilyMembers se llama 'cedula'
+        if (familyMembersCrudService.existsByCedula(familyMember.getCedula())) {
+            redirectAttributes.addFlashAttribute("showFamilyMembersSavedError", true)
+                    .addFlashAttribute("errorMessage", "Ya existe un miembro de familia con la cédula: " + familyMember.getCedula());
+        } else {
+            try {
+                familyMembersCrudService.save(familyMember);
+                redirectAttributes.addFlashAttribute("showFamilyMembersSavedOk", true);
+            } catch (Exception ex) {
+                redirectAttributes.addFlashAttribute("showFamilyMembersSavedError", true)
+                        .addFlashAttribute("errorMessage", "Ocurrió un error al guardar el miembro de familia.");
+            }
         }
-
-        // return new ModelAndView(VIEW_PATH  + "/familyMembers")
-        redirectAttributes.addFlashAttribute("showFamilyMembersSavedOk", showFamilyMembersSavedOk)
-                .addFlashAttribute("showFamilyMembersSavedError", showFamilyMembersSavedError);
 
         return "redirect:/inside/familyMembers";
     }
-
-
 }
