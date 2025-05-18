@@ -97,7 +97,7 @@
                 <select th:field="*{role}" class="form-select" id="floatingRole" required>
                   <option value="" disabled>Selecciona un rol</option>
                   <option value="ADMIN">Administrador</option>
-                  <option value="SOCORRO">Entidad</option>
+                  <option value="SOCORRO">Organismo de socorro</option>
                 </select>
                 <label for="floatingRole">Rol</label>
               </div>
@@ -108,7 +108,7 @@
                 <input th:field="*{password}" type="password" class="form-control" id="floatingPwd"
                        pattern="^(?!\s*$)[a-zA-Z0-9\s]{1,15}$" title="Debe contener entre 1 y 15 caracteres alfanuméricos y no puede ser solo espacios"
                        placeholder="Password" required>
-                <label for="floatingName">Password</label>
+                <label for="floatingName">Contraseña</label>
               </div>
             </div>
 
@@ -154,7 +154,8 @@
               <td><span th:text="${admin.name}">Nombres y Apellidos</span></td>
               <td><span th:text="${admin.telephone}">Celular</span></td>
               <td><span th:text="${admin.entity}"> Entidad</span></td>
-              <td><span th:text="${admin.role}"> Rol</span></td>
+              <td><span th:text="${admin.role == 'ADMIN' ? 'Administrador' : (admin.role == 'SOCORRO' ? 'Socorrista' :
+              admin.role)}">Rol</span></td>
               <td><span th:text="${admin.active ? 'Sí' : 'No'}"
                         th:class="${admin.active ? 'badge bg-success' : 'badge bg-light text-dark'}"></span>
               </td>

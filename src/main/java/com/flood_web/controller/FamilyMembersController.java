@@ -41,19 +41,32 @@ public class FamilyMembersController {
     @PostMapping("/familyMembers")
     public String saveFamilyMembers(@ModelAttribute("familyMember") FamilyMembers familyMember, RedirectAttributes redirectAttributes) {
 
-        // Asumo que el campo en tu DTO FamilyMembers se llama 'cedula'
-        if (familyMembersCrudService.existsByCedula(familyMember.getCedula())) {
-            redirectAttributes.addFlashAttribute("showFamilyMembersSavedError", true)
-                    .addFlashAttribute("errorMessage", "Ya existe un miembro de familia con la cédula: " + familyMember.getCedula());
-        } else {
-            try {
-                familyMembersCrudService.save(familyMember);
-                redirectAttributes.addFlashAttribute("showFamilyMembersSavedOk", true);
-            } catch (Exception ex) {
+        // Verificar si el ID está presente (indica una actualización)
+        if (familyMember.getId() == null) {
+            // Es una nueva creación, verificar si la cédula ya existe
+            if (familyMembersCrudService.existsByCedula(familyMember.getCedula())) {
                 redirectAttributes.addFlashAttribute("showFamilyMembersSavedError", true)
-                        .addFlashAttribute("errorMessage", "Ocurrió un error al guardar el miembro de familia.");
+                        .addFlashAttribute("errorMessage", "Ya existe un miembro de familia con la cédula: " + familyMember.getCedula());
+                return "redirect:/inside/familyMembers";
             }
         }
+
+        // Si el ID está presente, o si no se encontró una cédula duplicada en la creación, intentar guardar
+        boolean showFamilyMembersSavedOk = true;
+        boolean showFamilyMembersSavedError = false;
+        String errorMessage = "Ocurrió un error al guardar el miembro de familia.";
+        try {
+            familyMembersCrudService.save(familyMember);
+            redirectAttributes.addFlashAttribute("showFamilyMembersSavedOk", true);
+        } catch (Exception ex) {
+            showFamilyMembersSavedOk = false;
+            showFamilyMembersSavedError = true;
+            errorMessage = "Ocurrió un error, ya existe un miembro de familia con ese número de cédula";
+        }
+
+        redirectAttributes.addFlashAttribute("showFamilyMembersSavedOk", showFamilyMembersSavedOk)
+                .addFlashAttribute("showFamilyMembersSavedError", showFamilyMembersSavedError)
+                .addFlashAttribute("errorMessage", errorMessage);
 
         return "redirect:/inside/familyMembers";
     }

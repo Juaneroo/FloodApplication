@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
 
-
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
