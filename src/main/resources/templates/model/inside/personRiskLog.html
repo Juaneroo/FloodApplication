@@ -65,25 +65,27 @@
                         <form class="row g-3" method="get">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingDesde" name="desde" required>
+                                    <input type="date" class="form-control" id="floatingDesde" name="desde">
                                     <label for="floatingDesde">Desde</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingHasta" name="hasta" required>
+                                    <input type="date" class="form-control" id="floatingHasta" name="hasta">
                                     <label for="floatingHasta">Hasta</label>
                                 </div>
                             </div>
-                            <div class="d-flex gap-2 justify-content-center">
+                            <div class="form-floating">
                                 <button type="submit" class="btn btn-primary">Filtrar</button>
-                                <button type="button" class="btn btn-primary">PDF</button>
+                            </div>
+                            <div class="form-floating">
+                                <button type="button" class="btn btn-primary" onclick="generatePDF()">PDF</button>
                             </div>
                         </form>
 
 
                         <!-- Tabla de resultados -->
-                        <table class="table datatable mt-4">
+                        <table class="table datatable mt-4" id="pdf-content">
                             <thead>
                             <tr>
                                 <th>Persona notificada</th>
@@ -100,7 +102,23 @@
                             <tr th:each="personRiskLog : ${personRiskLogs}">
                                 <td><span th:text="${personRiskLog.personName}">Nombre</span></td>
                                 <td><span th:text="${personRiskLog.phoneNumber}">Teléfono</span></td>
-                                <td><span th:text="${personRiskLog.riskLevel}">Riesgo</span></td>
+                                <td>
+                                    <span th:text="${personRiskLog.riskLevel}">
+                                        Riesgo
+                                    </span>
+                                    <!-- Icono de riesgo basado en el nivel using th:if -->
+                                    <span th:if="${personRiskLog.riskLevel == 'Desastre inminente' ||
+                                    personRiskLog.riskLevel == 'Riesgo extremo'  || personRiskLog.riskLevel == 'Peligro inminente'}">
+                                        <button type="button" class="btn btn-danger"><i class="bi bi-exclamation-octagon"></i></button>
+                                    </span>
+                                    <span th:if="${personRiskLog.riskLevel == 'Riesgo muy alto' ||
+                                    personRiskLog.riskLevel == 'Riesgo alto'}">
+                                        <button type="button" class="btn btn-warning"><i class="bi bi-exclamation-triangle"></i></button>
+                                    </span>
+                                    <span th:if="${personRiskLog.riskLevel == 'Riesgo considerable'}">
+                                        <button type="button" class="btn btn-info"><i class="bi bi-info-circle"></i></button>
+                                    </span>
+                                </td>
                                 <td><span th:text="${personRiskLog.zoneName}">Zona</span></td>
                                 <td><span th:text="${personRiskLog.dateFormatted}">Fecha</span></td>
 
@@ -140,6 +158,22 @@
 <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
 <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
 <script th:src="@{/assets/js/main.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  function generatePDF() {
+    const element = document.getElementById('pdf-content');
+    html2pdf()
+      .from(element)
+      .set({
+        margin: 10,
+        filename: 'download.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      })
+      .save();
+  }
+</script>
 
 </body>
 </html>

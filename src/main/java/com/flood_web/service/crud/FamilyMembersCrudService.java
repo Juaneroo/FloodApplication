@@ -55,7 +55,7 @@ public class FamilyMembersCrudService implements CrudService<FamilyMembers>{
     }
 
     public Set<FamilyMembers> findPeopleUnderRisk(String sensorUnderRisk){
-        List<FamilyMemberEntity> peopleUnderRisk = familyMembersRepository.findBySensorId(sensorUnderRisk);
+        List<FamilyMemberEntity> peopleUnderRisk = familyMembersRepository.findBySensorIdAndActive(sensorUnderRisk);
         return peopleUnderRisk
                 .stream()
                 .map(member -> modelMapper.map(member, FamilyMembers.class))

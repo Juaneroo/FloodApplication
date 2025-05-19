@@ -13,16 +13,13 @@ import java.util.Optional;
 @Repository
 public interface FamilyMembersRepository extends CrudRepository<FamilyMemberEntity, String> { // Cambia String a Long
 
-    Optional<FamilyMemberEntity> findByCedula(String cedula);
-
     @Query("SELECT fm FROM FamilyMemberEntity fm " +
             "JOIN fm.family f " +
             "JOIN f.zone z " +
             "JOIN z.river r " +
             "JOIN r.sensor s " +
-            "WHERE s.id = :sensorId")
-    List<FamilyMemberEntity> findBySensorId(@Param("sensorId") String sensorId);
+            "WHERE s.id = :sensorId AND fm.active = true")
+    List<FamilyMemberEntity> findBySensorIdAndActive(@Param("sensorId") String sensorId);
 
-    // No necesitamos existsByIdNumber, pero podríamos usar existsByCedula
     boolean existsByCedula(String cedula);
 }

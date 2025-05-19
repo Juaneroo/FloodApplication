@@ -5,6 +5,8 @@ import com.flood_web.controller.FamilyMembers;
 import com.flood_web.controller.PersonRiskLog;
 import com.flood_web.controller.Sensor;
 import com.flood_web.data.entity.AlertsEntity;
+import com.flood_web.data.entity.NotificationRegistryEntity;
+import com.flood_web.data.repository.NotificationRegistryRepository;
 import com.flood_web.service.cache.UniqueKeyCacheService;
 import com.flood_web.service.crud.AlertCrudService;
 import com.flood_web.service.crud.FamilyMembersCrudService;
@@ -48,10 +50,10 @@ public class RiskService {
     private PersonRiskLogCrudService personRiskLogCrudService;
 
     @Autowired
-    private UniqueKeyCacheService uniqueKeyCacheService;
+    private ZoneCrudService zoneCrudService;
 
     @Autowired
-    private ZoneCrudService zoneCrudService;
+    private NotificationRegistryRepository notificationRegistryRepository;
 
 
     /**
@@ -62,9 +64,9 @@ public class RiskService {
      */
     private long getExpirationHours(RiskLevel riskLevel) {
         return switch (riskLevel) {
-            case CONSIDERABLE -> 12;
-            case HIGH -> 8;
-            case VERY_HIGH -> 6;
+            case CONSIDERABLE -> 24;
+            case HIGH -> 16;
+            case VERY_HIGH -> 8;
             case IMMINENT_DANGER -> 4;
             case EXTREME -> 2;
             case DISASTER -> 1;
@@ -95,10 +97,19 @@ public class RiskService {
     public void handleNotifications(Sensor sensorUnderRisk, RiskLevel riskLevel){
         Set<FamilyMembers> peopleForNotification = familyMembersCrudService.findPeopleUnderRisk(sensorUnderRisk.getId());
 
+
+
         peopleForNotification.forEach(
                 (personUnderRisk) -> {
+
+                    // Check if the notification has already been sent
+                    String key = personUnderRisk.getId() + "@" + sensorUnderRisk.getId() + "@" + riskLevel.getLevel();
+                    Optional<NotificationRegistryEntity> registry = notificationRegistryRepository.findById(key);
+                    if (registry.isPresent()) {
+                        log.info("Notification already sent for person {} and sensor {}. Skipping.", personUnderRisk.getId(), sensorUnderRisk.getId());
+                        return;
+                    }
                     String phoneNumber = "+57" + personUnderRisk.getTelephone();
-                    
                     smsStrategy.notifyEvent(
                                 phoneNumber,
                                 MessageTemplate.TEMPLATE_1_SMS
@@ -113,6 +124,7 @@ public class RiskService {
                         );
 
                     populateLog(personUnderRisk, riskLevel);
+                    saveNotificationRegistry(personUnderRisk.getId(), sensorUnderRisk.getId(), riskLevel);
                 }
         );
     }
@@ -143,6 +155,24 @@ public class RiskService {
                         .withPhoneNumber(personUnderRisk.getTelephone())
                         .withRiskLevel(riskLevel.getDescription())
                         .withZoneName(zoneName)
+                        .build()
+        );
+    }
+
+    public void saveNotificationRegistry(String personId, String sensorId, RiskLevel riskLevel) {
+        String key = personId + "@" + sensorId + "@" + riskLevel.getLevel();
+
+        Optional<NotificationRegistryEntity> registry = notificationRegistryRepository.findById(key);
+        if (registry.isPresent()) {
+            log.info("Notification already sent for person {} and sensor {}. Skipping.", personId, sensorId);
+            return;
+        }
+
+        // Save the notification registry and set the deleteAfter to the notification interval
+        notificationRegistryRepository.save(
+                NotificationRegistryEntity.builder()
+                        .withId(key)
+                        .withDeleteAfter(LocalDateTime.now().plusHours(getExpirationHours(riskLevel)))
                         .build()
         );
     }

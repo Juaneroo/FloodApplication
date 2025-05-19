@@ -28,7 +28,9 @@ public class PersonRiskLogCrudService implements CrudService<PersonRiskLog> {
 
     @Override
     public void save(PersonRiskLog personRiskLog) {
-        // implementación save
+        PersonRiskLogEntity personRiskLogEntity = modelMapper.map(personRiskLog, PersonRiskLogEntity.class);
+        personRiskLogEntity.setDate(LocalDateTime.now());
+        personRiskLogRepository.save(personRiskLogEntity);
     }
 
     @Override
@@ -49,10 +51,11 @@ public class PersonRiskLogCrudService implements CrudService<PersonRiskLog> {
 
     public List<PersonRiskLog> findBetweenDates(String desdeStr, String hastaStr) {
         // Parseamos las fechas y ajustamos para incluir todo el día
-        LocalDateTime desde = LocalDateTime.of(LocalDateTime.parse(desdeStr + "T00:00:00").toLocalDate(), LocalTime.MIN);
-        LocalDateTime hasta = LocalDateTime.of(LocalDateTime.parse(hastaStr + "T00:00:00").toLocalDate(), LocalTime.MAX);
+        LocalDateTime desde = LocalDateTime.parse(desdeStr + "T00:00:00");
+        LocalDateTime hasta = LocalDateTime.parse(hastaStr + "T00:00:00");
 
-        List<PersonRiskLogEntity> entities = personRiskLogRepository.findByDateBetweenOrderByDateDesc(desde, hasta);
+
+        List<PersonRiskLogEntity> entities = personRiskLogRepository.findByDateBetween(desde, hasta);
 
         return entities.stream()
                 .map(entity -> {
