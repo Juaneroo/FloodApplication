@@ -26,17 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class AdministratorsController {
 
-
-
     private static final String VIEW_PATH = "/model/inside";
-
-
 
     @Autowired
 
     AdministratorsCrudService administratorsCrudService;
-
-
 
     @GetMapping("/administrators")
 
@@ -50,8 +44,6 @@ public class AdministratorsController {
 
     }
 
-
-
     @GetMapping("/administrators/{id}")
 
     public ModelAndView getAdministratorsByIdNumber(@PathVariable String id){
@@ -63,8 +55,6 @@ public class AdministratorsController {
                 .addObject("administrators", administratorsCrudService.listAll());
 
     }
-
-
 
     @PostMapping("/administrators")
 
@@ -88,15 +78,11 @@ public class AdministratorsController {
 
         }
 
-
-
         boolean showAdministratorsSavedOk = true;
 
         boolean showAdministratorsSavedError = false;
 
         String errorMessage = "Ocurrió un error al guardar el administrador/socorrista.";
-
-
 
         try{
 
@@ -111,8 +97,6 @@ public class AdministratorsController {
             errorMessage = "Ocurrió un error, ya existe un administrador/socorrista con ese número de cédula";
 
         }
-
-
 
         redirectAttributes.addFlashAttribute("showAdministratorsSavedOk", showAdministratorsSavedOk)
 

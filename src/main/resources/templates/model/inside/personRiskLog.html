@@ -65,20 +65,18 @@
                         <form class="row g-3" method="get">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingDesde" name="desde">
+                                    <input type="date" class="form-control" id="floatingDesde" name="desde" required>
                                     <label for="floatingDesde">Desde</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingHasta" name="hasta">
+                                    <input type="date" class="form-control" id="floatingHasta" name="hasta" required>
                                     <label for="floatingHasta">Hasta</label>
                                 </div>
                             </div>
-                            <div class="form-floating">
+                            <div class="d-flex justify-content-center gap-2 mt-3">
                                 <button type="submit" class="btn btn-primary">Filtrar</button>
-                            </div>
-                            <div class="form-floating">
                                 <button type="button" class="btn btn-primary" onclick="generatePDF()">PDF</button>
                             </div>
                         </form>

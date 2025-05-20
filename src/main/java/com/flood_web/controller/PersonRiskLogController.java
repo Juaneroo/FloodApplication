@@ -22,18 +22,18 @@ public class PersonRiskLogController {
 
     @GetMapping("/personRiskLog")
     public ModelAndView getPersonRiskLog(
-            @RequestParam(name="desde", required = false) String desde,
-            @RequestParam(name="hasta", required = false) String hasta,
+            @RequestParam(name = "desde", required = false) String desde,
+            @RequestParam(name = "hasta", required = false) String hasta,
             RedirectAttributes redirectAttributes
-    ){
-
-
-        if(!fromLowerThanTo(desde, hasta)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al ingresar las fechas 'desde' no puede ser mayor que 'hasta'.");
+    ) {
+        if (!fromBeforeOrEqualToTo(desde, hasta)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al ingresar las fechas: 'desde' no puede ser mayor que 'hasta'.");
             return new ModelAndView("redirect:/inside/personRiskLog");
         }
+
         Map<String, String> dates = setDateValues(desde, hasta);
         List<PersonRiskLog> logs = personRiskLogCrudService.findBetweenDates(dates.get("desde"), dates.get("hasta"));
+
         return new ModelAndView(VIEW_PATH + "/personRiskLog")
                 .addObject("personRiskLogForm", PersonRiskLog.builder().build())
                 .addObject("personRiskLogs", logs);
@@ -41,16 +41,16 @@ public class PersonRiskLogController {
 
     private Map<String, String> setDateValues(String desde, String hasta) {
         LocalDate desdeDate = (desde == null || desde.isEmpty()) ? LocalDate.of(1999, 1, 1) : LocalDate.parse(desde);
-        LocalDate hastaDate = (hasta == null || hasta.isEmpty()) ? LocalDate.now().plusDays(1) : LocalDate.parse(hasta);
+        LocalDate hastaDate = (hasta == null || hasta.isEmpty()) ? LocalDate.now().plusDays(1) : LocalDate.parse(hasta).plusDays(1);
 
         return Map.of("desde", desdeDate.toString(), "hasta", hastaDate.toString());
     }
 
-    private boolean fromLowerThanTo(String desde, String hasta) {
+    private boolean fromBeforeOrEqualToTo(String desde, String hasta) {
         if (desde != null && hasta != null && !desde.isEmpty() && !hasta.isEmpty()) {
             LocalDate desdeDate = LocalDate.parse(desde);
             LocalDate hastaDate = LocalDate.parse(hasta);
-            return desdeDate.isAfter(hastaDate);
+            return !desdeDate.isAfter(hastaDate); // permite igual o menor
         }
         return true;
     }
